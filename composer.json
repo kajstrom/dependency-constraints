@@ -1,0 +1,19 @@
+{
+    "name": "kajstrom/dependency-constraints",
+    "description": "Library for creating constraints based on code metrics from Pdepend.",
+    "type": "library",
+    "require-dev": {
+        "phpunit/phpunit": "^6.5"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Kaj Ström",
+            "email": "kaj.strom@kapsi.fi"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-4": {"KajStrom\\DependencyConstraints\\": "src/"}
+    }
+}
