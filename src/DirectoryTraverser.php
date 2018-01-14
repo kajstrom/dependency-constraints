@@ -1,7 +1,6 @@
 <?php
-
+declare(strict_types=1);
 namespace KajStrom\DependencyConstraints;
-
 
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
