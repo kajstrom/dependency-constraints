@@ -1,6 +1,6 @@
 {
     "name": "kajstrom/dependency-constraints",
-    "description": "Library for creating constraints based on code metrics from Pdepend.",
+    "description": "Library for creating constraints for dependencies between modules.",
     "type": "library",
     "require": {
         "php": "^7.0.0",
