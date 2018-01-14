@@ -9,7 +9,7 @@ class FileAnalyzer
      */
     private $path;
 
-    /** @var  Module|null */
+    /** @var  SubModule|null */
     private $module;
     /**
      * @var ModuleRegistry
@@ -54,7 +54,7 @@ class FileAnalyzer
                 if ($this->registry->has($moduleName)) {
                     $this->module = $this->registry->get($moduleName);
                 } else {
-                    $this->module = new Module($moduleName);
+                    $this->module = new SubModule($moduleName);
                     $this->registry->add($this->module);
                 }
             }
@@ -74,7 +74,7 @@ class FileAnalyzer
         }
     }
 
-    public function getModule() : ?Module
+    public function getModule() : ?SubModule
     {
         return $this->module;
     }

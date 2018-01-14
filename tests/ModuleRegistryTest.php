@@ -1,6 +1,6 @@
 <?php
 
-use KajStrom\DependencyConstraints\Module;
+use KajStrom\DependencyConstraints\SubModule;
 use KajStrom\DependencyConstraints\ModuleRegistry;
 use PHPUnit\Framework\TestCase;
 
@@ -10,7 +10,7 @@ class ModuleRegistryTest extends TestCase
     {
         $registry = new ModuleRegistry();
 
-        $module = new Module("Some\\Module");
+        $module = new SubModule("Some\\Module");
 
         $registry->add($module);
 
@@ -23,7 +23,7 @@ class ModuleRegistryTest extends TestCase
     {
         $registry = new ModuleRegistry();
 
-        $module = new Module("Some\\Module");
+        $module = new SubModule("Some\\Module");
 
         $registry->add($module);
         $registry->add($module);

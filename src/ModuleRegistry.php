@@ -4,10 +4,10 @@ namespace KajStrom\DependencyConstraints;
 
 class ModuleRegistry
 {
-    /** @var Module[] */
+    /** @var SubModule[] */
     private $modules = [];
 
-    public function add(Module $module) : void
+    public function add(SubModule $module) : void
     {
         if (!$this->has($module->getName())) {
             $this->modules[] = $module;
@@ -25,7 +25,7 @@ class ModuleRegistry
         return false;
     }
 
-    public function get(string $name) : ?Module
+    public function get(string $name) : ?SubModule
     {
         foreach ($this->modules as $module) {
             if ($module->is($name)) {

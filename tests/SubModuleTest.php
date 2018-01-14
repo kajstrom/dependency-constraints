@@ -1,14 +1,14 @@
 <?php
 
 use KajStrom\DependencyConstraints\Dependency;
-use KajStrom\DependencyConstraints\Module;
+use KajStrom\DependencyConstraints\SubModule;
 use PHPUnit\Framework\TestCase;
 
-class ModuleTest extends TestCase
+class SubModuleTest extends TestCase
 {
     public function testAddDependencyAddsDependencyToModule()
     {
-        $module = new Module("Test\\Package");
+        $module = new SubModule("Test\\Package");
         $module->addDependency(new Dependency("Some\\Dependency\\ClassA"));
 
         $this->assertTrue($module->dependsOnModule("Some\\Dependency"));
@@ -16,7 +16,7 @@ class ModuleTest extends TestCase
 
     public function testHasDependencyOnWhenDependencyExistsReturnsTrue()
     {
-        $module = new Module("Test\\Package");
+        $module = new SubModule("Test\\Package");
         $module->addDependency(new Dependency("Some\\Dependency\\ClassA"));
 
         $this->assertTrue($module->hasDependencyOn("Some\\Dependency\\ClassA"));
@@ -24,7 +24,7 @@ class ModuleTest extends TestCase
 
     public function testHasDependencyOnWhenNoDependencyExistsReturnsFalse()
     {
-        $module = new Module("Test\\Package");
+        $module = new SubModule("Test\\Package");
         $module->addDependency(new Dependency("Some\\Dependency\\ClassA"));
 
         $this->assertFalse($module->hasDependencyOn("Some\\Dependency\\ClassB"));
@@ -32,15 +32,30 @@ class ModuleTest extends TestCase
 
     public function testIsWhenModuleIsSameReturnsTrue()
     {
-        $module = new Module("Test\\Package");
+        $module = new SubModule("Test\\Package");
 
         $this->assertTrue($module->is("Test\\Package"));
     }
 
     public function testIsWhenModuleIsSameReturnsFalse()
     {
-        $module = new Module("Test\\Package");
+        $module = new SubModule("Test\\Package");
 
         $this->assertFalse($module->is("Some\\Other\\Module"));
+    }
+
+    public function testBelongsToModuleWhenModuleBelongsToModule()
+    {
+        $module = new SubModule("Test\\Package");
+
+        $this->assertTrue($module->belongsToModule("Test\\"));
+    }
+
+    public function testBelongsToModuleWhenModuleNameDoesNotEndInNSSeparatorThrowsInvalidArgumentException()
+    {
+        $module = new SubModule("Test\\Package");
+
+        $this->expectException(InvalidArgumentException::class);
+        $module->belongsToModule("Test");
     }
 }
