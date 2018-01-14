@@ -3,5 +3,7 @@ php:
   - '7.0'
   - '7.1'
   - '7.2'
+install:
+  - composer install
 script:
-  - ./vendor/bin/phpunit --bootstrapt ./vendor/autoload.php tests
+  - ./vendor/bin/phpunit --bootstrap ./vendor/autoload.php tests
