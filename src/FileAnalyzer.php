@@ -55,6 +55,7 @@ class FileAnalyzer
                     $this->module = $this->registry->get($moduleName);
                 } else {
                     $this->module = new Module($moduleName);
+                    $this->registry->add($this->module);
                 }
             }
 

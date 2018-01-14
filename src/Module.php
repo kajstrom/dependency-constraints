@@ -32,7 +32,7 @@ class Module
             }
         }
 
-        return true;
+        return false;
     }
 
     public function hasDependencyOn(string $fqn) : bool

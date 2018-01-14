@@ -11,17 +11,16 @@ class DirectoryTraverser
     /**
      * @var ModuleRegistry
      */
-    private $moduleRegistry;
+    private $registry;
     /**
      * @var string
      */
     private $path;
 
-    public function __construct(string $path, ModuleRegistry $moduleRegistry)
+    public function __construct(string $path, ModuleRegistry $registry)
     {
         $this->path = realpath($path);
-        echo $this->path;
-        $this->moduleRegistry = $moduleRegistry;
+        $this->registry = $registry;
     }
 
     public function traverse()
@@ -30,7 +29,8 @@ class DirectoryTraverser
         $phpFiles = new RegexIterator($allFiles, '/\.php$/');
 
         foreach ($phpFiles as $phpFile) {
-            new FileAnalyzer($phpFile->getRealPath());
+            $analyzer = new FileAnalyzer($phpFile->getRealPath(), $this->registry);
+            $analyzer->analyze();
         }
     }
 }

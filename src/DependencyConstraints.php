@@ -9,14 +9,23 @@ class DependencyConstraints
      */
     private $path;
     /** @var  ModuleRegistry */
-    private $packageRegistry;
+    private $registry;
 
     public function __construct(string $path)
     {
         $this->path = $path;
-        $this->packageRegistry = new ModuleRegistry();
+        $this->registry = new ModuleRegistry();
 
-        $traverser = new DirectoryTraverser($path, $this->packageRegistry);
+        $traverser = new DirectoryTraverser($path, $this->registry);
         $traverser->traverse();
+    }
+
+    public function getModule(string $name) : Module
+    {
+        if (!$this->registry->has($name)) {
+            throw new \InvalidArgumentException("No module found with name: $name");
+        }
+
+        return $this->registry->get($name);
     }
 }

@@ -1,5 +1,6 @@
 # TODO
 
+- Add a way to get a module for test usages. This module should transparently handle submodules.
 - use multiple classes with aliasing.
 - FQN without use keyword in parameters and new/function calls.
 - use function + support w/ aliasing.
