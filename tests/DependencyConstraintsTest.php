@@ -42,4 +42,20 @@ class DependencyConstraintsTest extends TestCase
 
         $this->assertTrue($module->hasDependencyOn(RecursiveDirectoryIterator::class));
     }
+
+    public function testGetModuleOnTestFilesReturnsModuleThatHasDependency()
+    {
+        $dc = new DependencyConstraints(__DIR__ . "/files");
+        $module = $dc->getModule("Test\\Package\\");
+
+        $this->assertTrue($module->dependsOnModule("KajStrom\\DependencyConstraints"));
+    }
+
+    public function testGetModuleWithNonExistentModuleNameReturnsNull()
+    {
+        $dc = new DependencyConstraints(__DIR__ . "/files");
+        $module = $dc->getModule("No\\Such\\Module\\");
+
+        $this->assertNull($module);
+    }
 }

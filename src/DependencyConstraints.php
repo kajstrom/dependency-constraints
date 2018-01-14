@@ -20,8 +20,19 @@ class DependencyConstraints
         $traverser->traverse();
     }
 
-    public function getModule(string $name) : Module
+    public function getModule(string $name) : ?Module
     {
-        return $this->registry->getSubModulesOf($name);
+        $compositeModule = $this->registry->getSubModulesOf($name);
+
+        if ($compositeModule->moduleCount() !== 0) {
+            return $compositeModule;
+        }
+
+        $singleName = substr($name, 0, strlen($name) - 1);
+        if ($this->registry->has($singleName)) {
+            return $this->registry->get($singleName);
+        }
+
+        return null;
     }
 }
