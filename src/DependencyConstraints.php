@@ -10,13 +10,13 @@ class DependencyConstraints
      * @var string
      */
     private $path;
-    /** @var  PackageRegistry */
+    /** @var  ModuleRegistry */
     private $packageRegistry;
 
     public function __construct(string $path)
     {
         $this->path = $path;
-        $this->packageRegistry = new PackageRegistry();
+        $this->packageRegistry = new ModuleRegistry();
 
         $traverser = new DirectoryTraverser($path, $this->packageRegistry);
         $traverser->traverse();

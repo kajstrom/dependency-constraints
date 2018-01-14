@@ -10,19 +10,19 @@ use RegexIterator;
 class DirectoryTraverser
 {
     /**
-     * @var PackageRegistry
+     * @var ModuleRegistry
      */
-    private $packageRegistry;
+    private $moduleRegistry;
     /**
      * @var string
      */
     private $path;
 
-    public function __construct(string $path, PackageRegistry $packageRegistry)
+    public function __construct(string $path, ModuleRegistry $moduleRegistry)
     {
         $this->path = realpath($path);
         echo $this->path;
-        $this->packageRegistry = $packageRegistry;
+        $this->moduleRegistry = $moduleRegistry;
     }
 
     public function traverse()

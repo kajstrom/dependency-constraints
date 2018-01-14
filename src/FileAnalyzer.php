@@ -11,8 +11,8 @@ class FileAnalyzer
      */
     private $path;
 
-    /** @var  Package|null */
-    private $package;
+    /** @var  Module|null */
+    private $module;
 
     public function __construct(string $path)
     {
@@ -28,10 +28,11 @@ class FileAnalyzer
         $contents = file_get_contents($this->path);
         $tokens = token_get_all($contents);
 
-        //fwrite(STDERR, print_r(array_slice($tokens, 5, 10), true));
+        fwrite(STDERR, print_r(array_slice($tokens, 9, 5), true));
+        fwrite(STDERR, print_r(token_name(390), true));
 
         $tokenCount = count($tokens);
-        $packageName = null;
+        $moduleName = null;
         for ($index = 0; $index < $tokenCount; $index++) {
             if (!is_array($tokens[$index])) {
                 continue;
@@ -40,23 +41,33 @@ class FileAnalyzer
             if (T_NAMESPACE === $tokens[$index][0]) {
                 $index += 2;
 
-                $packageName = "";
+                $moduleName = "";
                 while (";" !== $tokens[$index]) {
-                    $packageName .= $tokens[$index][1];
+                    $moduleName .= $tokens[$index][1];
 
                     $index++;
                 }
+
+                $this->module = new Module($moduleName);
             }
-        }
 
+            if (T_USE === $tokens[$index][0]) {
+                $index += 2;
 
-        if (!is_null($packageName)) {
-            $this->package = new Package($packageName);
+                $fqn = "";
+                while (";" !== $tokens[$index]) {
+                    $fqn .= $tokens[$index][1];
+
+                    $index++;
+                }
+
+                $this->module->addDependency(new Dependency($fqn));
+            }
         }
     }
 
-    public function getPackage() : ?Package
+    public function getModule() : ?Module
     {
-        return $this->package;
+        return $this->module;
     }
 }

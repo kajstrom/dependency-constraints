@@ -4,12 +4,12 @@ declare(strict_types=1);
 namespace KajStrom\DependencyConstraints;
 
 
-class PackageRegistry
+class ModuleRegistry
 {
-    /** @var Package[] */
+    /** @var Module[] */
     private $packages = [];
 
-    public function add(Package $package)
+    public function add(Module $package)
     {
         $this->packages[] = $package;
     }
@@ -19,7 +19,7 @@ class PackageRegistry
         return false;
     }
 
-    public function get(string $package) : Package
+    public function get(string $package) : Module
     {
 
     }
