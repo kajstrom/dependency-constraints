@@ -36,6 +36,19 @@ class ModuleRegistry
         return null;
     }
 
+    public function getSubModulesOf(string $name) : CompositeModule
+    {
+        $cm = new CompositeModule($name);
+
+        foreach ($this->modules as $module) {
+            if ($module->belongsToModule($name)) {
+                $cm->add($module);
+            }
+        }
+
+        return $cm;
+    }
+
     public function size() : int
     {
         return count($this->modules);

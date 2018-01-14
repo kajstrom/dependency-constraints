@@ -22,10 +22,6 @@ class DependencyConstraints
 
     public function getModule(string $name) : Module
     {
-        if (!$this->registry->has($name)) {
-            throw new \InvalidArgumentException("No module found with name: $name");
-        }
-
-        return $this->registry->get($name);
+        return $this->registry->getSubModulesOf($name);
     }
 }

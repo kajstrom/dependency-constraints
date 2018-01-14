@@ -30,4 +30,18 @@ class ModuleRegistryTest extends TestCase
 
         $this->assertSame(1, $registry->size());
     }
+
+    public function testGetSubModulesOfReturnsCompositeModuleOfSubModules()
+    {
+        $registry = new ModuleRegistry();
+
+        $registry->add(new SubModule("Some\\Module\\Module1"));
+        $registry->add(new SubModule("Some\\Module\\Module2"));
+        $registry->add(new SubModule("Some\\Module\\Module3"));
+        $registry->add(new SubModule("Some\\Unrelated\\Module"));
+
+        $module = $registry->getSubModulesOf("Some\\Module\\");
+
+        $this->assertSame(3, $module->moduleCount());
+    }
 }
