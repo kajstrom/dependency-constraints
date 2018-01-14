@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace KajStrom\DependencyConstraints;
 
-
 class CompositeModule implements Module
 {
     /**
