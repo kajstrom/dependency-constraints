@@ -47,7 +47,13 @@ class CompositeModule implements Module
 
     public function hasDependencyOn(string $fqn): bool
     {
-        // TODO: Implement hasDependencyOn() method.
+        foreach ($this->subModules as $sub) {
+            if ($sub->hasDependencyOn($fqn)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     public function is(string $module): bool
