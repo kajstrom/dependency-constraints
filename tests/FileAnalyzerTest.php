@@ -1,13 +1,14 @@
 <?php
 
 use KajStrom\DependencyConstraints\FileAnalyzer;
+use KajStrom\DependencyConstraints\ModuleRegistry;
 use PHPUnit\Framework\TestCase;
 
 class FileAnalyzerTest extends TestCase
 {
     public function testAnalyzeFindsPackageNameFromNamespace()
     {
-        $analyzer = new FileAnalyzer(dirname(__DIR__) . "/src/FileAnalyzer.php");
+        $analyzer = $this->makeAnalyzer(dirname(__DIR__) . "/src/FileAnalyzer.php");
         $analyzer->analyze();
 
         $module = $analyzer->getModule();
@@ -17,7 +18,7 @@ class FileAnalyzerTest extends TestCase
 
     public function testAnalyzeFindsDependencyFromUseKeyword()
     {
-        $analyzer = new FileAnalyzer(__DIR__ . "/files/FileWithUseClause.php");
+        $analyzer = $this->makeAnalyzer(__DIR__ . "/files/FileWithUseClause.php");
         $analyzer->analyze();
 
         $module = $analyzer->getModule();
@@ -27,12 +28,16 @@ class FileAnalyzerTest extends TestCase
 
     public function testAnalyzeFindsDependencyFromUseKeywordWithAlias()
     {
-        $analyzer = new FileAnalyzer(__DIR__ . "/files/FileWithUseClauseAlias.php");
+        $analyzer = $this->makeAnalyzer(__DIR__ . "/files/FileWithUseClauseAlias.php");
         $analyzer->analyze();
 
         $module = $analyzer->getModule();
 
         $this->assertTrue($module->dependsOnModule("KajStrom\\DependencyConstraints"));
+    }
 
+    private function makeAnalyzer(string $path) : FileAnalyzer
+    {
+        return new FileAnalyzer($path, new ModuleRegistry());
     }
 }

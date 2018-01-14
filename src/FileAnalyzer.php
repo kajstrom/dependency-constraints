@@ -11,14 +11,19 @@ class FileAnalyzer
 
     /** @var  Module|null */
     private $module;
+    /**
+     * @var ModuleRegistry
+     */
+    private $registry;
 
-    public function __construct(string $path)
+    public function __construct(string $path, ModuleRegistry $registry)
     {
         if (!is_file($path)) {
             throw new \InvalidArgumentException("$path is not a file");
         }
 
         $this->path = $path;
+        $this->registry = $registry;
     }
 
     public function analyze()
@@ -46,7 +51,11 @@ class FileAnalyzer
                     $index++;
                 }
 
-                $this->module = new Module($moduleName);
+                if ($this->registry->has($moduleName)) {
+                    $this->module = $this->registry->get($moduleName);
+                } else {
+                    $this->module = new Module($moduleName);
+                }
             }
 
             if (T_USE === $tokens[$index][0]) {
