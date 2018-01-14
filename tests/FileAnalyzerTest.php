@@ -24,4 +24,15 @@ class FileAnalyzerTest extends TestCase
 
         $this->assertTrue($module->dependsOnModule("KajStrom\\DependencyConstraints"));
     }
+
+    public function testAnalyzeFindsDependencyFromUseKeywordWithAlias()
+    {
+        $analyzer = new FileAnalyzer(__DIR__ . "/files/FileWithUseClauseAlias.php");
+        $analyzer->analyze();
+
+        $module = $analyzer->getModule();
+
+        $this->assertTrue($module->dependsOnModule("KajStrom\\DependencyConstraints"));
+
+    }
 }

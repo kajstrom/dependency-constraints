@@ -34,4 +34,15 @@ class Module
 
         return true;
     }
+
+    public function hasDependencyOn(string $fqn) : bool
+    {
+        foreach ($this->dependencies as $dependency) {
+            if ($dependency->is($fqn)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }

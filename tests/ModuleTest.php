@@ -8,9 +8,25 @@ class ModuleTest extends TestCase
 {
     public function testAddDependencyAddsDependencyToModule()
     {
-        $package = new Module("Test\\Package");
-        $package->addDependency(new Dependency("Some\\Dependency\\ClassA"));
+        $module = new Module("Test\\Package");
+        $module->addDependency(new Dependency("Some\\Dependency\\ClassA"));
 
-        $this->assertTrue($package->dependsOnModule("Some\\Dependency"));
+        $this->assertTrue($module->dependsOnModule("Some\\Dependency"));
+    }
+
+    public function testHasDependencyOnWhenDependencyExistsReturnsTrue()
+    {
+        $module = new Module("Test\\Package");
+        $module->addDependency(new Dependency("Some\\Dependency\\ClassA"));
+
+        $this->assertTrue($module->hasDependencyOn("Some\\Dependency\\ClassA"));
+    }
+
+    public function testHasDependencyOnWhenNoDependencyExistsReturnsFalse()
+    {
+        $module = new Module("Test\\Package");
+        $module->addDependency(new Dependency("Some\\Dependency\\ClassA"));
+
+        $this->assertFalse($module->hasDependencyOn("Some\\Dependency\\ClassB"));
     }
 }

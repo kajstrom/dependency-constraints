@@ -26,8 +26,8 @@ class FileAnalyzer
         $contents = file_get_contents($this->path);
         $tokens = token_get_all($contents);
 
-        fwrite(STDERR, print_r(array_slice($tokens, 9, 5), true));
-        fwrite(STDERR, print_r(token_name(390), true));
+        //fwrite(STDERR, print_r(array_slice($tokens, 9, 5), true));
+        //fwrite(STDERR, print_r(token_name(390), true));
 
         $tokenCount = count($tokens);
         $moduleName = null;
@@ -53,7 +53,7 @@ class FileAnalyzer
                 $index += 2;
 
                 $fqn = "";
-                while (";" !== $tokens[$index]) {
+                while ($this->notSemicolonOrWhitespace($tokens[$index])) {
                     $fqn .= $tokens[$index][1];
 
                     $index++;
@@ -67,5 +67,14 @@ class FileAnalyzer
     public function getModule() : ?Module
     {
         return $this->module;
+    }
+
+    private function notSemicolonOrWhitespace($token) : bool
+    {
+        if ($token === ";") {
+            return false;
+        }
+
+        return T_WHITESPACE !== $token[0];
     }
 }

@@ -18,4 +18,9 @@ class Dependency
     {
         return strpos($this->fqn, $module) === 0;
     }
+
+    public function is(string $fqn) : bool
+    {
+        return $this->fqn === $fqn;
+    }
 }
