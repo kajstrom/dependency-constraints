@@ -5,19 +5,39 @@ namespace KajStrom\DependencyConstraints;
 class ModuleRegistry
 {
     /** @var Module[] */
-    private $packages = [];
+    private $modules = [];
 
-    public function add(Module $package)
+    public function add(Module $module) : void
     {
-        $this->packages[] = $package;
+        if (!$this->has($module->getName())) {
+            $this->modules[] = $module;
+        }
     }
 
-    public function has(string $package) : bool
+    public function has(string $name) : bool
     {
+        foreach ($this->modules as $module) {
+            if ($module->is($name)) {
+                return true;
+            }
+        }
+
         return false;
     }
 
-    public function get(string $package) : Module
+    public function get(string $name) : ?Module
     {
+        foreach ($this->modules as $module) {
+            if ($module->is($name)) {
+                return $module;
+            }
+        }
+
+        return null;
+    }
+
+    public function size() : int
+    {
+        return count($this->modules);
     }
 }

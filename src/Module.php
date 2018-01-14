@@ -45,4 +45,9 @@ class Module
 
         return false;
     }
+
+    public function is(string $module) : bool
+    {
+        return $this->name === $module;
+    }
 }

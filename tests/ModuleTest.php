@@ -29,4 +29,18 @@ class ModuleTest extends TestCase
 
         $this->assertFalse($module->hasDependencyOn("Some\\Dependency\\ClassB"));
     }
+
+    public function testIsWhenModuleIsSameReturnsTrue()
+    {
+        $module = new Module("Test\\Package");
+
+        $this->assertTrue($module->is("Test\\Package"));
+    }
+
+    public function testIsWhenModuleIsSameReturnsFalse()
+    {
+        $module = new Module("Test\\Package");
+
+        $this->assertFalse($module->is("Some\\Other\\Module"));
+    }
 }
