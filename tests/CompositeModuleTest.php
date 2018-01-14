@@ -47,4 +47,18 @@ class CompositeModuleTest extends TestCase
 
         $this->assertFalse($cm->hasDependencyOn("Some\\OtherModule\\ClassA"));
     }
+
+    public function testIsWhenModuleIsTheModuleBeingTestedReturnsTrue()
+    {
+        $cm = new CompositeModule("Some\\Module\\");
+
+        $this->assertTrue($cm->is("Some\\Module\\"));
+    }
+
+    public function testIsWhenMOduleIsNotTheModuleBeingTestedReturnsFalse()
+    {
+        $cm = new CompositeModule("Some\\Module\\");
+
+        $this->assertFalse($cm->is("Totally\\Different\\Module\\"));
+    }
 }

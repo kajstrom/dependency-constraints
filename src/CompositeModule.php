@@ -58,6 +58,6 @@ class CompositeModule implements Module
 
     public function is(string $module): bool
     {
-        // TODO: Implement is() method.
+        return $this->name === $module;
     }
 }
