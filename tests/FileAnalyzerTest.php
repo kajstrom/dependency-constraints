@@ -16,9 +16,9 @@ class FileAnalyzerTest extends TestCase
         $this->assertEquals("KajStrom\\DependencyConstraints", $module->getName());
     }
 
-    public function testAnalyzeFindsDependencyFromUseKeyword()
+    public function testAnalyzeFindsDependencyFromClassUseKeyword()
     {
-        $analyzer = $this->makeAnalyzer(__DIR__ . "/files/FileWithUseClause.php");
+        $analyzer = $this->makeAnalyzer(__DIR__ . "/files/FileWithClassUseClause.php");
         $analyzer->analyze();
 
         $module = $analyzer->getModule();
@@ -26,9 +26,9 @@ class FileAnalyzerTest extends TestCase
         $this->assertTrue($module->dependsOnModule("KajStrom\\DependencyConstraints"));
     }
 
-    public function testAnalyzeFindsDependencyFromUseKeywordWithAlias()
+    public function testAnalyzeFindsDependencyFromClassUseKeywordWithAlias()
     {
-        $analyzer = $this->makeAnalyzer(__DIR__ . "/files/FileWithUseClauseAlias.php");
+        $analyzer = $this->makeAnalyzer(__DIR__ . "/files/FileWithClassUseClauseAlias.php");
         $analyzer->analyze();
 
         $module = $analyzer->getModule();
