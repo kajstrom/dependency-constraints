@@ -34,6 +34,20 @@ class FileAnalyzerTest extends TestCase
         $module = $analyzer->getModule();
 
         $this->assertTrue($module->dependsOnModule("KajStrom\\DependencyConstraints"));
+        $this->assertTrue($module->hasDependencyOn("KajStrom\\DependencyConstraints\\DependencyConstraints"));
+    }
+
+    public function testAnalyzeFindsDependencyFromGroupedClassUseKeyword()
+    {
+        $analyzer = $this->makeAnalyzer(__DIR__ . "/files/FileWithClassGroupedClassUseClause.php");
+        $analyzer->analyze();
+
+        $module = $analyzer->getModule();
+
+        $this->assertTrue($module->dependsOnModule("KajStrom\\DependencyConstraints"));
+        $this->assertTrue($module->hasDependencyOn("KajStrom\\DependencyConstraints\\DependencyConstraints"));
+        $this->assertTrue($module->hasDependencyOn("KajStrom\\DependencyConstraints\\FileAnalyzer"));
+        $this->assertTrue($module->hasDependencyOn("KajStrom\\DependencyConstraints\\SubModule"));
     }
 
     private function makeAnalyzer(string $path) : FileAnalyzer

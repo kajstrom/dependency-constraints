@@ -2,6 +2,8 @@
 declare(strict_types=1);
 namespace KajStrom\DependencyConstraints;
 
+use KajStrom\DependencyConstraints\Analyzer\UseClassAnalyzer;
+
 class FileAnalyzer
 {
     /**
@@ -31,7 +33,7 @@ class FileAnalyzer
         $contents = file_get_contents($this->path);
         $tokens = token_get_all($contents);
 
-        //fwrite(STDERR, print_r(array_slice($tokens, 9, 5), true));
+        //fwrite(STDERR, print_r(array_slice($tokens, 9, 10), true));
         //fwrite(STDERR, print_r(token_name(390), true));
 
         $tokenCount = count($tokens);
@@ -62,14 +64,15 @@ class FileAnalyzer
             if (T_USE === $tokens[$index][0]) {
                 $index += 2;
 
-                $fqn = "";
-                while ($this->notSemicolonOrWhitespace($tokens[$index])) {
-                    $fqn .= $tokens[$index][1];
+                $analyzeTokens = [];
 
+                while ($this->notSemicolon($tokens[$index])) {
+                    $analyzeTokens[] = $tokens[$index];
                     $index++;
                 }
 
-                $this->module->addDependency(new Dependency($fqn));
+                $useClassAnalyzer = new UseClassAnalyzer($analyzeTokens, $this->module);
+                $useClassAnalyzer->analyze();
             }
         }
     }
@@ -79,12 +82,8 @@ class FileAnalyzer
         return $this->module;
     }
 
-    private function notSemicolonOrWhitespace($token) : bool
+    private function notSemicolon($token) : bool
     {
-        if ($token === ";") {
-            return false;
-        }
-
-        return T_WHITESPACE !== $token[0];
+        return $token !== ";";
     }
 }

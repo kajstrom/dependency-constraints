@@ -23,4 +23,9 @@ class Dependency
     {
         return $this->fqn === $fqn;
     }
+
+    public function __toString()
+    {
+        return $this->fqn;
+    }
 }
