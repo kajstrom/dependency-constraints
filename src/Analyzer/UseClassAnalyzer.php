@@ -11,10 +11,6 @@ class UseClassAnalyzer
      */
     private $tokens;
     /**
-     * @var Dependency[]
-     */
-    private $dependencies = [];
-    /**
      * @var SubModule
      */
     private $subModule;

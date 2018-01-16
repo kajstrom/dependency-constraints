@@ -1,6 +1,7 @@
 # TODO
 
 - Clean up UseClassAnalyzer implementation.
+- Centralize Token related helper methods into a new class.
 - FQN without use keyword in parameters and new/function calls.
 - use function + support w/ aliasing.
 - use function multiple + support w/ aliasing.
