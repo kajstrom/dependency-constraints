@@ -34,9 +34,13 @@ class UseClassAnalyzer
 
                     if ($this->notCommaOrWhitespace($tokens[$index]) && $this->notAs($tokens[$index])) {
                         $this->subModule->addDependency(new Dependency($fqn . $tokens[$index][1]));
-                    }
 
-                    $index++;
+                        $index++;
+                    } else if ($this->isAs($tokens[$index])) {
+                        $index += 3;
+                    } else {
+                        $index++;
+                    }
                 }
 
                 $fqn = "";

@@ -48,6 +48,7 @@ class FileAnalyzerTest extends TestCase
         $this->assertTrue($module->hasDependencyOn("KajStrom\\DependencyConstraints\\DependencyConstraints"));
         $this->assertTrue($module->hasDependencyOn("KajStrom\\DependencyConstraints\\FileAnalyzer"));
         $this->assertTrue($module->hasDependencyOn("KajStrom\\DependencyConstraints\\SubModule"));
+        $this->assertSame(3, $module->getDependencyCount());
     }
 
     public function testAnalyzeFindsDependencyFromCommaSeparatedUseKeyword()

@@ -59,4 +59,9 @@ class SubModule implements Module
 
         return strpos($this->name, $module) === 0;
     }
+
+    public function getDependencyCount() : int
+    {
+        return count($this->dependencies);
+    }
 }
