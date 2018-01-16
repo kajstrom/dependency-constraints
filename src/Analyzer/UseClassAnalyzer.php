@@ -29,24 +29,18 @@ class UseClassAnalyzer
 
         $fqn = "";
         for ($index = 0; $index < count($tokens); $index++) {
-            if ($tokens[$index] === "{") {
-                while ("}" !== $tokens[$index]) {
-                    if ($this->notCommaOrWhitespace($tokens[$index]) && $this->notAs($tokens[$index])) {
-                        //fwrite(STDERR, $fqn . $tokens[$index][1] . PHP_EOL);
-                        $this->subModule->addDependency(new Dependency($fqn . $tokens[$index][1]));
+            if ($this->isOpeningCurlyBrace($tokens[$index])) {
+                while (!$this->isClosingCurlyBrace($tokens[$index])) {
 
-                        $index++;
-                    } else if ($this->isAs($tokens[$index])) {
-                        //Skip whitespace and alias.
-                        $index += 3;
-                    } else {
-                        $index++;
+                    if ($this->notCommaOrWhitespace($tokens[$index]) && $this->notAs($tokens[$index])) {
+                        $this->subModule->addDependency(new Dependency($fqn . $tokens[$index][1]));
                     }
+
+                    $index++;
                 }
 
                 $fqn = "";
             } else if ($this->isComma($tokens[$index])) {
-                //fwrite(STDERR, $fqn);
                 $this->subModule->addDependency(new Dependency($fqn));
                 $fqn = "";
             } else if ($this->notWhiteSpace($tokens[$index])) {
@@ -59,7 +53,6 @@ class UseClassAnalyzer
             }
         }
 
-        //fwrite(STDERR, $fqn . PHP_EOL);
         if (!empty($fqn)) {
             $this->subModule->addDependency(new Dependency($fqn));
         }
@@ -104,6 +97,16 @@ class UseClassAnalyzer
     private function isComma($token) : bool
     {
         return $token === ",";
+    }
+
+    private function isOpeningCurlyBrace($token) : bool
+    {
+        return $token === "{";
+    }
+
+    private function isClosingCurlyBrace($token) : bool
+    {
+        return $token === "}";
     }
 
 }
