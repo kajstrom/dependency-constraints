@@ -50,6 +50,18 @@ class FileAnalyzerTest extends TestCase
         $this->assertTrue($module->hasDependencyOn("KajStrom\\DependencyConstraints\\SubModule"));
     }
 
+    public function testAnalyzeFindsDependencyFromCommaSeparatedUseKeyword()
+    {
+        $analyzer = $this->makeAnalyzer(__DIR__ . "/files/FileWithClassUseClauseCommaSeparated.php");
+        $analyzer->analyze();
+
+        $module = $analyzer->getModule();
+
+        $this->assertTrue($module->dependsOnModule("KajStrom\\DependencyConstraints"));
+        $this->assertTrue($module->hasDependencyOn("KajStrom\\DependencyConstraints\\CompositeModule"));
+        $this->assertTrue($module->hasDependencyOn("KajStrom\\DependencyConstraints\\DependencyConstraints"));
+    }
+
     private function makeAnalyzer(string $path) : FileAnalyzer
     {
         return new FileAnalyzer($path, new ModuleRegistry());

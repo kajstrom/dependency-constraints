@@ -1,6 +1,5 @@
 # TODO
 
-- use with multiple comma-separated includes.
 - Clean up UseClassAnalyzer implementation.
 - FQN without use keyword in parameters and new/function calls.
 - use function + support w/ aliasing.

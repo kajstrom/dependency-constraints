@@ -35,7 +35,7 @@ class UseClassAnalyzer
         for ($index = 0; $index < count($tokens); $index++) {
             if ($tokens[$index] === "{") {
                 while ("}" !== $tokens[$index]) {
-                    if ($this->notColonOrWhiteSpace($tokens[$index]) && $this->notAs($tokens[$index])) {
+                    if ($this->notCommaOrWhitespace($tokens[$index]) && $this->notAs($tokens[$index])) {
                         //fwrite(STDERR, $fqn . $tokens[$index][1] . PHP_EOL);
                         $this->subModule->addDependency(new Dependency($fqn . $tokens[$index][1]));
 
@@ -48,6 +48,10 @@ class UseClassAnalyzer
                     }
                 }
 
+                $fqn = "";
+            } else if ($this->isComma($tokens[$index])) {
+                //fwrite(STDERR, $fqn);
+                $this->subModule->addDependency(new Dependency($fqn));
                 $fqn = "";
             } else if ($this->notWhiteSpace($tokens[$index])) {
                 if ($this->isAs($tokens[$index])) {
@@ -74,9 +78,9 @@ class UseClassAnalyzer
         return true;
     }
 
-    private function notColonOrWhitespace($token) : bool
+    private function notCommaOrWhitespace($token) : bool
     {
-        if ($token === ",") {
+        if ($this->isComma($token)) {
             return false;
         }
 
@@ -100,4 +104,10 @@ class UseClassAnalyzer
 
         return T_AS === $token[0];
     }
+
+    private function isComma($token) : bool
+    {
+        return $token === ",";
+    }
+
 }
