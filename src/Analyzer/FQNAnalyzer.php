@@ -31,6 +31,10 @@ class FQNAnalyzer implements Analyzer
 
     public function analyze(): void
     {
+        if ($this->isGlobalFunctionCall()) {
+            return;
+        }
+
         $fqn = array_map(function($token) {
             return $token[1];
         }, $this->tokens);
@@ -41,5 +45,17 @@ class FQNAnalyzer implements Analyzer
         $this->subModule->addDependency(new Dependency($fqn));
     }
 
-
+    /**
+     * Checks that the FQN is not for a global function.
+     *
+     * FQNs with only two tokens can only be
+     *
+     * E.g. \is_array($myArray) will be ignored as a dependency.
+     *
+     * @return bool
+     */
+    public function isGlobalFunctionCall() : bool
+    {
+        return count($this->tokens) === 2;
+    }
 }

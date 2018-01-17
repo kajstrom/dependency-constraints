@@ -8,5 +8,6 @@ class FileWithFQNUsages
     public function __construct(\KajStrom\DependencyConstraints\Dependency $dependency)
     {
         $a = new \KajStrom\DependencyConstraints\ModuleRegistry();
+        \is_object($a);
     }
 }
