@@ -2,6 +2,7 @@
 declare(strict_types=1);
 namespace KajStrom\DependencyConstraints;
 
+use KajStrom\DependencyConstraints\Analyzer\FQNAnalyzer;
 use KajStrom\DependencyConstraints\Analyzer\UseClassAnalyzer;
 
 class FileAnalyzer
@@ -82,14 +83,8 @@ class FileAnalyzer
                     $index++;
                 }
 
-                $fqn = array_map(function($token) {
-                    return $token[1];
-                }, $analyzeTokens);
-
-                $fqn = implode("", $fqn);
-                $fqn = substr($fqn, 1);
-
-                $this->module->addDependency(new Dependency($fqn));
+                $fqnAnalyzer = new FQNAnalyzer($analyzeTokens, $this->module);
+                $fqnAnalyzer->analyze();
             }
         }
     }

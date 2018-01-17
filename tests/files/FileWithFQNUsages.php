@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Kaitsu
- * Date: 17.1.2018
- * Time: 18:43
- */
 
 namespace Test\Package;
 

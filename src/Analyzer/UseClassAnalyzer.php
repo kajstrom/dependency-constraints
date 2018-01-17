@@ -4,7 +4,7 @@ namespace KajStrom\DependencyConstraints\Analyzer;
 use KajStrom\DependencyConstraints\Dependency;
 use KajStrom\DependencyConstraints\SubModule;
 
-class UseClassAnalyzer
+class UseClassAnalyzer implements Analyzer
 {
     /**
      * @var array
