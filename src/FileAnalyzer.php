@@ -4,6 +4,7 @@ namespace KajStrom\DependencyConstraints;
 
 use KajStrom\DependencyConstraints\Analyzer\FQNAnalyzer;
 use KajStrom\DependencyConstraints\Analyzer\UseClassAnalyzer;
+use KajStrom\DependencyConstraints\Token\Helpers as TH;
 
 class FileAnalyzer
 {
@@ -48,7 +49,7 @@ class FileAnalyzer
                 $index += 2;
 
                 $moduleName = "";
-                while (";" !== $tokens[$index]) {
+                while (TH::notSemicolon($tokens[$index])) {
                     $moduleName .= $tokens[$index][1];
 
                     $index++;
@@ -67,7 +68,7 @@ class FileAnalyzer
 
                 $analyzeTokens = [];
 
-                while ($this->notSemicolon($tokens[$index])) {
+                while (TH::notSemicolon($tokens[$index])) {
                     $analyzeTokens[] = $tokens[$index];
                     $index++;
                 }
@@ -78,7 +79,7 @@ class FileAnalyzer
 
             if (T_NS_SEPARATOR === $tokens[$index][0]) {
                 $analyzeTokens = [];
-                while ($this->partOfQualifiedName($tokens[$index])) {
+                while (TH::partOfQualifiedName($tokens[$index])) {
                     $analyzeTokens[] = $tokens[$index];
                     $index++;
                 }
@@ -92,23 +93,5 @@ class FileAnalyzer
     public function getModule() : ?SubModule
     {
         return $this->module;
-    }
-
-    private function notSemicolon($token) : bool
-    {
-        return $token !== ";";
-    }
-
-    private function partOfQualifiedName($token) : bool
-    {
-        if (T_NS_SEPARATOR === $token[0]) {
-            return true;
-        }
-
-        if (T_STRING === $token[0]) {
-            return true;
-        }
-
-        return false;
     }
 }
