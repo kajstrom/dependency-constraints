@@ -23,6 +23,10 @@ class UseClassAnalyzer implements Analyzer
 
     public function analyze() : void
     {
+        if ($this->isGlobalClass()) {
+            return;
+        }
+
         $tokens = $this->tokens;
 
         //fwrite(STDERR, print_r($tokens, true));
@@ -113,4 +117,8 @@ class UseClassAnalyzer implements Analyzer
         return $token === "}";
     }
 
+    private function isGlobalClass() : bool
+    {
+        return count($this->tokens) === 1;
+    }
 }

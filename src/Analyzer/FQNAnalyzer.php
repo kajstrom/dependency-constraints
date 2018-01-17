@@ -31,7 +31,7 @@ class FQNAnalyzer implements Analyzer
 
     public function analyze(): void
     {
-        if ($this->isGlobalFunctionCall()) {
+        if ($this->isGlobalFunctionOrClass()) {
             return;
         }
 
@@ -51,10 +51,11 @@ class FQNAnalyzer implements Analyzer
      * FQNs with only two tokens can only be
      *
      * E.g. \is_array($myArray) will be ignored as a dependency.
+     * Also global class usages will be ignored e.g. new \Datetime();
      *
      * @return bool
      */
-    public function isGlobalFunctionCall() : bool
+    public function isGlobalFunctionOrClass() : bool
     {
         return count($this->tokens) === 2;
     }
