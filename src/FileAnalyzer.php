@@ -78,7 +78,7 @@ class FileAnalyzer
 
             if (T_NS_SEPARATOR === $tokens[$index][0]) {
                 $analyzeTokens = [];
-                while ($this->partOfQuafiedName($tokens[$index])) {
+                while ($this->partOfQualifiedName($tokens[$index])) {
                     $analyzeTokens[] = $tokens[$index];
                     $index++;
                 }
@@ -99,7 +99,7 @@ class FileAnalyzer
         return $token !== ";";
     }
 
-    private function partOfQuafiedName($token) : bool
+    private function partOfQualifiedName($token) : bool
     {
         if (T_NS_SEPARATOR === $token[0]) {
             return true;
