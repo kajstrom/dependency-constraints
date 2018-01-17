@@ -1,7 +1,7 @@
 # TODO
 
-- Clean up UseClassAnalyzer implementation.
-- Centralize Token related helper methods into a new class.
+- Don't consider imports from submodules as dependencies.
+- README and alpha release.
 - use function + support w/ aliasing.
 - use function multiple + support w/ aliasing.
 - use const w/ support for aliasing.
