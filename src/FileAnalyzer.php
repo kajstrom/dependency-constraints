@@ -74,6 +74,23 @@ class FileAnalyzer
                 $useClassAnalyzer = new UseClassAnalyzer($analyzeTokens, $this->module);
                 $useClassAnalyzer->analyze();
             }
+
+            if (T_NS_SEPARATOR === $tokens[$index][0]) {
+                $analyzeTokens = [];
+                while ($this->partOfQuafiedName($tokens[$index])) {
+                    $analyzeTokens[] = $tokens[$index];
+                    $index++;
+                }
+
+                $fqn = array_map(function($token) {
+                    return $token[1];
+                }, $analyzeTokens);
+
+                $fqn = implode("", $fqn);
+                $fqn = substr($fqn, 1);
+
+                $this->module->addDependency(new Dependency($fqn));
+            }
         }
     }
 
@@ -85,5 +102,18 @@ class FileAnalyzer
     private function notSemicolon($token) : bool
     {
         return $token !== ";";
+    }
+
+    private function partOfQuafiedName($token) : bool
+    {
+        if (T_NS_SEPARATOR === $token[0]) {
+            return true;
+        }
+
+        if (T_STRING === $token[0]) {
+            return true;
+        }
+
+        return false;
     }
 }

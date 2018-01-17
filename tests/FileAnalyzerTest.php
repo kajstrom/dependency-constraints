@@ -63,6 +63,19 @@ class FileAnalyzerTest extends TestCase
         $this->assertTrue($module->hasDependencyOn("KajStrom\\DependencyConstraints\\DependencyConstraints"));
     }
 
+    public function testAnalyzeFindsDependencyFromFQNUsages()
+    {
+        $analyzer = $this->makeAnalyzer(__DIR__ . "/files/FileWithFQNUsages.php");
+        $analyzer->analyze();
+
+        $module = $analyzer->getModule();
+
+        $this->assertTrue($module->dependsOnModule("KajStrom\\DependencyConstraints"));
+        $this->assertTrue($module->hasDependencyOn("KajStrom\\DependencyConstraints\\Dependency"));
+        $this->assertTrue($module->hasDependencyOn("KajStrom\\DependencyConstraints\\ModuleRegistry"));
+        $this->assertSame(2, $module->getDependencyCount());
+    }
+
     private function makeAnalyzer(string $path) : FileAnalyzer
     {
         return new FileAnalyzer($path, new ModuleRegistry());
