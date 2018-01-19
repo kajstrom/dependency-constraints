@@ -50,12 +50,4 @@ class SubModuleTest extends TestCase
 
         $this->assertTrue($module->belongsToModule("Test\\"));
     }
-
-    public function testBelongsToModuleWhenModuleNameDoesNotEndInNSSeparatorThrowsInvalidArgumentException()
-    {
-        $module = new SubModule("Test\\Package");
-
-        $this->expectException(InvalidArgumentException::class);
-        $module->belongsToModule("Test");
-    }
 }

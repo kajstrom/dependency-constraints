@@ -53,10 +53,6 @@ class SubModule implements Module
 
     public function belongsToModule(string $module) : bool
     {
-        if (substr($module, -1) !== "\\") {
-            throw new \InvalidArgumentException("Module name $module does not end in namespace separator '\\'");
-        }
-
         return strpos($this->name, $module) === 0;
     }
 
