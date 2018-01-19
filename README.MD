@@ -1,6 +1,6 @@
 [![Tracis CI](https://travis-ci.org/kajstrom/dependency-constraints.svg?branch=master)](https://travis-ci.org/kajstrom/dependency-constraints)
 
-#DependencyConstraints
+# DependencyConstraints
 
 DependencyConstraints is a static code analysis tool for creating constraints for dependencies between modules in your project.
 It is intended to be used within a testing library such as PHPUnit or Codeception.
