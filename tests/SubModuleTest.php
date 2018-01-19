@@ -14,6 +14,16 @@ class SubModuleTest extends TestCase
         $this->assertTrue($module->dependsOnModule("Some\\Dependency"));
     }
 
+    public function testAddDependencyWhenDependencyIsForASubModuleDoesNotAddDependency()
+    {
+        $module = new SubModule("Test\\Package");
+        $module->addDependency(new Dependency("Test\\Package\\SubModule\\ClassA"));
+
+        $this->assertFalse($module->dependsOnModule("Test\\Package\\SubModule"));
+        $this->assertFalse($module->hasDependencyOn("Test\\Package\\SubModule\\ClassA"));
+        $this->assertSame(0, $module->getDependencyCount());
+    }
+
     public function testHasDependencyOnWhenDependencyExistsReturnsTrue()
     {
         $module = new SubModule("Test\\Package");
@@ -37,7 +47,7 @@ class SubModuleTest extends TestCase
         $this->assertTrue($module->is("Test\\Package"));
     }
 
-    public function testIsWhenModuleIsSameReturnsFalse()
+    public function testIsWhenModuleIsNotSameReturnsFalse()
     {
         $module = new SubModule("Test\\Package");
 

@@ -76,6 +76,17 @@ class FileAnalyzerTest extends TestCase
         $this->assertSame(2, $module->getDependencyCount());
     }
 
+    public function testAnalyzeDoesNotConsiderSubModuleAsADependency()
+    {
+        $analyzer = $this->makeAnalyzer(__DIR__ . "/files/FileWithClassUseClauseSubModule.php");
+        $analyzer->analyze();
+
+        $module = $analyzer->getModule();
+
+        $this->assertFalse($module->dependsOnModule("Test\\Package\\SubModule"));
+        $this->assertFalse($module->hasDependencyOn("Test\\Package\\SubModule\\SubModule"));;
+    }
+
     private function makeAnalyzer(string $path) : FileAnalyzer
     {
         return new FileAnalyzer($path, new ModuleRegistry());

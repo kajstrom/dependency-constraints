@@ -16,7 +16,9 @@ class SubModule implements Module
 
     public function addDependency(Dependency $dependency) : void
     {
-        $this->dependencies[] = $dependency;
+        if (!$dependency->belongsToModule($this->name)) {
+            $this->dependencies[] = $dependency;
+        }
     }
 
     public function getName() : string

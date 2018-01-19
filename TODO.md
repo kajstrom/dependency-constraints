@@ -1,6 +1,5 @@
 # TODO
 
-- Don't consider imports from submodules as dependencies.
 - README and alpha release.
 - use function + support w/ aliasing.
 - use function multiple + support w/ aliasing.
