@@ -1,17 +1,11 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Kaitsu
- * Date: 14.1.2018
- * Time: 15:54
- */
 
 use KajStrom\DependencyConstraints\DependencyConstraints;
 use PHPUnit\Framework\TestCase;
 
 class DependencyConstraintsTest extends TestCase
 {
-    public function testWIP()
+    public function testGetModuleReturnsModuleThatIsNotCoupledToNonExistentModule()
     {
         $dc = new DependencyConstraints(dirname(__DIR__) . "/src");
         $module = $dc->getModule("KajStrom\\DependencyConstraints");
