@@ -79,7 +79,7 @@ Using "MyProject\ModuleA\SubModule\SomeClass" in "MyProject\ModuleA" is not a de
 
 ## Limitations
 
-As a static code analysis tool DependencyConstraints can't catch absolutely everything. Let's say someone wants to be really clever and do something like this:
+As a static code analysis tool DependencyConstraints can't catch absolutely everything. Let's say someone wants to be clever and do something like this:
 
 ```php
 $className = "MyProject\\Module\\Class";
