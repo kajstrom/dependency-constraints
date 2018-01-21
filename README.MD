@@ -11,6 +11,23 @@ you can create tests that act as a safeguard against such changes.
 
 DependencyConstraints is inspired by JDepend and Fitness Functions introduced in the book [Building Evolutionary Architectures](https://www.thoughtworks.com/books/building-evolutionary-architectures).
 
+## What is considered to be a dependency
+
+DependencyConstraints assumes the following to be dependencies:
+- Using a class, interface, trait or instances of a class from another module (namespace). (In testing currently)
+- Using a function from another module. (In testing currently)
+- Using a constant from another module. (In testing currently)
+
+Currently globally scoped classes, functions and constants are not considered to be dependencies.
+
+Using something from a submodule is not considered to be a dependency.
+
+For example:
+
+Using "MyProject\ModuleA\SomeClass" in "MyProject\ModuleB" is a dependency.
+
+Using "MyProject\ModuleA\SubModule\SomeClass" in "MyProject\ModuleA" is not a dependency.
+
 ## Potential use cases
 
 In a layered architecture you might want to prevent other layers of your software from becoming coupled to the presentation layer.
@@ -58,24 +75,7 @@ public function testModuleDoesNotDependOnSingleton()
     
     $this->assertFalse($module->hasDependencyOn("MyProject\\Utils\\SingletonThatSeemedAGoodIdeaBackThen");
 }
-```
-
-## What is considered to be a dependency
-
-DependencyConstraints assumes the following to be dependencies:
-- Using a class or instances of a class from another module (namespace). (In testing currently)
-- Using a function from another module. (Not implemented yet)
-- Using a constant from another module. (Not implemented yet)
-
-Globally scoped classes, functions and constants are not considered to be dependencies currently.
-
-Using something from a submodule is not considered to be a dependency.
-
-For example:
-
-Using "MyProject\ModuleA\SomeClass" in "MyProject\ModuleB" is a dependency.
-
-Using "MyProject\ModuleA\SubModule\SomeClass" in "MyProject\ModuleA" is not a dependency. 
+``` 
 
 ## Limitations
 
