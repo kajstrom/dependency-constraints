@@ -3,7 +3,7 @@ declare(strict_types=1);
 namespace KajStrom\DependencyConstraints;
 
 use KajStrom\DependencyConstraints\Analyzer\FQNAnalyzer;
-use KajStrom\DependencyConstraints\Analyzer\UseClassAnalyzer;
+use KajStrom\DependencyConstraints\Analyzer\UseAnalyzer;
 use KajStrom\DependencyConstraints\Token\Helpers as TH;
 
 class FileAnalyzer
@@ -77,7 +77,7 @@ class FileAnalyzer
                     $index++;
                 }
 
-                $useClassAnalyzer = new UseClassAnalyzer($analyzeTokens, $this->module);
+                $useClassAnalyzer = new UseAnalyzer($analyzeTokens, $this->module);
                 $useClassAnalyzer->analyze();
             }
 

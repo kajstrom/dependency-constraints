@@ -5,7 +5,7 @@ use KajStrom\DependencyConstraints\Dependency;
 use KajStrom\DependencyConstraints\SubModule;
 use KajStrom\DependencyConstraints\Token\Helpers as TH;
 
-class UseClassAnalyzer implements Analyzer
+class UseAnalyzer implements Analyzer
 {
     /**
      * @var array
@@ -29,8 +29,6 @@ class UseClassAnalyzer implements Analyzer
         }
 
         $tokens = $this->tokens;
-
-        //fwrite(STDERR, print_r($tokens, true));
 
         $fqn = "";
         for ($index = 0; $index < count($tokens); $index++) {
