@@ -1,8 +1,8 @@
 <?php
 namespace Test\Package;
 
-use function Test\FunctionPackage\some_function,
-    Test\FunctionPackage\another_function;
+use function Test\FunctionModule\some_function,
+    Test\FunctionModule\another_function;
 
 class FileWithUseFunctionCommaSeparated
 {

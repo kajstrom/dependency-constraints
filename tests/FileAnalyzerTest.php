@@ -94,8 +94,8 @@ class FileAnalyzerTest extends TestCase
 
         $module = $analyzer->getModule();
 
-        $this->assertTrue($module->dependsOnModule("Test\\FunctionPackage"));
-        $this->assertTrue($module->hasDependencyOn("Test\\FunctionPackage\\some_function"));
+        $this->assertTrue($module->dependsOnModule("Test\\FunctionModule"));
+        $this->assertTrue($module->hasDependencyOn("Test\\FunctionModule\\some_function"));
     }
 
     public function testAnalyzeFindsFunctionDependenciesFromUseMultiple()
@@ -105,9 +105,9 @@ class FileAnalyzerTest extends TestCase
 
         $module = $analyzer->getModule();
 
-        $this->assertTrue($module->dependsOnModule("Test\\FunctionPackage"));
-        $this->assertTrue($module->hasDependencyOn("Test\\FunctionPackage\\some_function"));
-        $this->assertTrue($module->hasDependencyOn("Test\\FunctionPackage\\another_function"));
+        $this->assertTrue($module->dependsOnModule("Test\\FunctionModule"));
+        $this->assertTrue($module->hasDependencyOn("Test\\FunctionModule\\some_function"));
+        $this->assertTrue($module->hasDependencyOn("Test\\FunctionModule\\another_function"));
     }
 
     public function testAnalyzeFindsFunctionDependenciesFromCommaSeparatedUse()
@@ -117,9 +117,9 @@ class FileAnalyzerTest extends TestCase
 
         $module = $analyzer->getModule();
 
-        $this->assertTrue($module->dependsOnModule("Test\\FunctionPackage"));
-        $this->assertTrue($module->hasDependencyOn("Test\\FunctionPackage\\some_function"));
-        $this->assertTrue($module->hasDependencyOn("Test\\FunctionPackage\\another_function"));
+        $this->assertTrue($module->dependsOnModule("Test\\FunctionModule"));
+        $this->assertTrue($module->hasDependencyOn("Test\\FunctionModule\\some_function"));
+        $this->assertTrue($module->hasDependencyOn("Test\\FunctionModule\\another_function"));
     }
 
     private function makeAnalyzer(string $path) : FileAnalyzer

@@ -1,6 +1,6 @@
 <?php
 
-namespace Test\FunctionPackage;
+namespace Test\FunctionModule;
 
 function some_function() {
     return null;
