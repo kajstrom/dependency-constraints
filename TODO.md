@@ -1,8 +1,7 @@
 # TODO
 
-- README and alpha release.
-- use function + support w/ aliasing.
 - use function multiple + support w/ aliasing.
+- Alpha 2 release. Update readme.
 - use const w/ support for aliasing.
 - use const multiple w/ support for aliasing.
 - Add handling for namespace keyword when referring to the current namespace in a qualified name.

@@ -87,6 +87,17 @@ class FileAnalyzerTest extends TestCase
         $this->assertFalse($module->hasDependencyOn("Test\\Package\\SubModule\\SubModule"));;
     }
 
+    public function testAnalyzeFindsFunctionDependency()
+    {
+        $analyzer = $this->makeAnalyzer(__DIR__ . "/files/FileWithUseFunctionClause.php");
+        $analyzer->analyze();
+
+        $module = $analyzer->getModule();
+
+        $this->assertTrue($module->dependsOnModule("Test\\FunctionPackage"));
+        $this->assertTrue($module->hasDependencyOn("Test\\FunctionPackage\\some_function"));
+    }
+
     private function makeAnalyzer(string $path) : FileAnalyzer
     {
         return new FileAnalyzer($path, new ModuleRegistry());

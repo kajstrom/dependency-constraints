@@ -66,6 +66,10 @@ class FileAnalyzer
             if (T_USE === $tokens[$index][0]) {
                 $index += 2;
 
+                if (T_FUNCTION === $tokens[$index][0]) {
+                    $index += 2;
+                }
+
                 $analyzeTokens = [];
 
                 while (TH::notSemicolon($tokens[$index])) {
