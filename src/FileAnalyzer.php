@@ -70,6 +70,10 @@ class FileAnalyzer
                     $index += 2;
                 }
 
+                if (T_CONST === $tokens[$index][0]) {
+                    $index += 2;
+                }
+
                 $analyzeTokens = [];
 
                 while (TH::notSemicolon($tokens[$index])) {

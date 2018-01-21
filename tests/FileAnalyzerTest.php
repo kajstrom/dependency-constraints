@@ -122,6 +122,17 @@ class FileAnalyzerTest extends TestCase
         $this->assertTrue($module->hasDependencyOn("Test\\FunctionModule\\another_function"));
     }
 
+    public function testAnalyzeFindsConstantDependency()
+    {
+        $analyzer = $this->makeAnalyzer(__DIR__ . "/files/FileWithUseConstClause.php");
+        $analyzer->analyze();
+
+        $module = $analyzer->getModule();
+
+        $this->assertTrue($module->dependsOnModule("Test\\ConstantModule"));
+        $this->assertTrue($module->hasDependencyOn("Test\\ConstantModule\\SOME_CONST"));
+    }
+
     private function makeAnalyzer(string $path) : FileAnalyzer
     {
         return new FileAnalyzer($path, new ModuleRegistry());
