@@ -133,6 +133,30 @@ class FileAnalyzerTest extends TestCase
         $this->assertTrue($module->hasDependencyOn("Test\\ConstantModule\\SOME_CONST"));
     }
 
+    public function testAnalyzeFindsMultipleConstantDependencies()
+    {
+        $analyzer = $this->makeAnalyzer(__DIR__ . "/files/FileWithUseConstMultiple.php");
+        $analyzer->analyze();
+
+        $module = $analyzer->getModule();
+
+        $this->assertTrue($module->dependsOnModule("Test\\ConstantModule"));
+        $this->assertTrue($module->hasDependencyOn("Test\\ConstantModule\\SOME_CONST"));
+        $this->assertTrue($module->hasDependencyOn("Test\\ConstantModule\\SOME_OTHER_CONST"));
+    }
+
+    public function testAnalyzeFindsCommaSeparatedConstantDependencies()
+    {
+        $analyzer = $this->makeAnalyzer(__DIR__ . "/files/FileWithUseConstCommaSeparated.php");
+        $analyzer->analyze();
+
+        $module = $analyzer->getModule();
+
+        $this->assertTrue($module->dependsOnModule("Test\\ConstantModule"));
+        $this->assertTrue($module->hasDependencyOn("Test\\ConstantModule\\SOME_CONST"));
+        $this->assertTrue($module->hasDependencyOn("Test\\ConstantModule\\SOME_OTHER_CONST"));
+    }
+
     private function makeAnalyzer(string $path) : FileAnalyzer
     {
         return new FileAnalyzer($path, new ModuleRegistry());
