@@ -110,6 +110,18 @@ class FileAnalyzerTest extends TestCase
         $this->assertTrue($module->hasDependencyOn("Test\\FunctionPackage\\another_function"));
     }
 
+    public function testAnalyzeFindsFunctionDependenciesFromCommaSeparatedUse()
+    {
+        $analyzer = $this->makeAnalyzer(__DIR__ . "/files/FileWithUseFunctionCommaSeparated.php");
+        $analyzer->analyze();
+
+        $module = $analyzer->getModule();
+
+        $this->assertTrue($module->dependsOnModule("Test\\FunctionPackage"));
+        $this->assertTrue($module->hasDependencyOn("Test\\FunctionPackage\\some_function"));
+        $this->assertTrue($module->hasDependencyOn("Test\\FunctionPackage\\another_function"));
+    }
+
     private function makeAnalyzer(string $path) : FileAnalyzer
     {
         return new FileAnalyzer($path, new ModuleRegistry());
