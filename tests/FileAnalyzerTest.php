@@ -98,6 +98,18 @@ class FileAnalyzerTest extends TestCase
         $this->assertTrue($module->hasDependencyOn("Test\\FunctionPackage\\some_function"));
     }
 
+    public function testAnalyzeFindsFunctionDependenciesFromUseMultiple()
+    {
+        $analyzer = $this->makeAnalyzer(__DIR__ . "/files/FileWithUseFunctionMultipleClause.php");
+        $analyzer->analyze();
+
+        $module = $analyzer->getModule();
+
+        $this->assertTrue($module->dependsOnModule("Test\\FunctionPackage"));
+        $this->assertTrue($module->hasDependencyOn("Test\\FunctionPackage\\some_function"));
+        $this->assertTrue($module->hasDependencyOn("Test\\FunctionPackage\\another_function"));
+    }
+
     private function makeAnalyzer(string $path) : FileAnalyzer
     {
         return new FileAnalyzer($path, new ModuleRegistry());
