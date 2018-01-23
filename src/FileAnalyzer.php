@@ -64,6 +64,14 @@ class FileAnalyzer
             }
 
             if (T_USE === $tokens[$index][0]) {
+                if (TH::isOpeningParenthesis($tokens[$index + 1])) {
+                    continue;
+                }
+
+                if (TH::isOpeningParenthesis($tokens[$index + 2])) {
+                    continue;
+                }
+
                 $index += 2;
 
                 if (T_FUNCTION === $tokens[$index][0]) {

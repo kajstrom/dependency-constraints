@@ -33,6 +33,15 @@ class Helpers
         return $token === "}";
     }
 
+    public static function isOpeningParenthesis($token) : bool
+    {
+        if (is_array($token)) {
+            return false;
+        }
+
+        return $token === "(";
+    }
+
     public static function isComma($token) : bool
     {
         return $token === ",";
