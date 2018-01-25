@@ -167,6 +167,17 @@ class FileAnalyzerTest extends TestCase
         $this->assertTrue($module->hasDependencyOn("Test\\ConstantModule\\SOME_OTHER_CONST"));
     }
 
+    public function testAnalyzeFindsDependencyFromFQNTraitUse()
+    {
+        $analyzer = $this->makeAnalyzer(__DIR__ . "/files/FileWithFQNTraitUse.php");
+        $analyzer->analyze();
+
+        $module = $analyzer->getModule();
+
+        $this->assertTrue($module->dependsOnModule("Test\\TraitModule"));
+        $this->assertTrue($module->hasDependencyOn("Test\\TraitModule\\TraitFile"));
+    }
+
     private function makeAnalyzer(string $path) : FileAnalyzer
     {
         return new FileAnalyzer($path, new ModuleRegistry());

@@ -30,6 +30,10 @@ class UseAnalyzer implements Analyzer
 
         $tokens = $this->tokens;
 
+        if (TH::isNamespaceSeparator($tokens[0])) {
+            $tokens = array_slice($tokens, 1);
+        }
+
         $fqn = "";
         for ($index = 0; $index < count($tokens); $index++) {
             if (TH::isOpeningCurlyBrace($tokens[$index])) {
