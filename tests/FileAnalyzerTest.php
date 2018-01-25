@@ -178,6 +178,17 @@ class FileAnalyzerTest extends TestCase
         $this->assertTrue($module->hasDependencyOn("Test\\TraitModule\\TraitFile"));
     }
 
+    public function testAnalyzeFindsDependencyFromImportedTraitUse()
+    {
+        $analyzer = $this->makeAnalyzer(__DIR__ . "/files/FileWithImportedTraitUse.php");
+        $analyzer->analyze();
+
+        $module = $analyzer->getModule();
+
+        $this->assertTrue($module->dependsOnModule("Test\\TraitModule"));
+        $this->assertTrue($module->hasDependencyOn("Test\\TraitModule\\TraitFile"));
+    }
+
     private function makeAnalyzer(string $path) : FileAnalyzer
     {
         return new FileAnalyzer($path, new ModuleRegistry());
