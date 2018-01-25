@@ -91,4 +91,13 @@ class Helpers
 
         return T_NS_SEPARATOR === $token[0];
     }
+
+    public static function isNamespace($token) : bool
+    {
+        if (!is_array($token)) {
+            return false;
+        }
+
+        return T_NAMESPACE === $token[0];
+    }
 }

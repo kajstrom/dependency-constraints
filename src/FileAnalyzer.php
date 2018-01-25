@@ -35,9 +35,6 @@ class FileAnalyzer
         $contents = file_get_contents($this->path);
         $tokens = token_get_all($contents);
 
-        //fwrite(STDERR, print_r(array_slice($tokens, 9, 10), true));
-        //fwrite(STDERR, print_r(token_name(390), true));
-
         $tokenCount = count($tokens);
         $moduleName = null;
         for ($index = 0; $index < $tokenCount; $index++) {
@@ -45,7 +42,15 @@ class FileAnalyzer
                 continue;
             }
 
-            if (T_NAMESPACE === $tokens[$index][0]) {
+            if (TH::isNamespace($tokens[$index])) {
+                if (TH::isNamespaceSeparator($tokens[$index + 1])) {
+                    $index += 2;
+                    while(TH::partOfQualifiedName($tokens[$index])) {
+                        $index++;
+                    }
+                    continue;
+                }
+
                 $index += 2;
 
                 $moduleName = "";
@@ -93,7 +98,7 @@ class FileAnalyzer
                 $useClassAnalyzer->analyze();
             }
 
-            if (T_NS_SEPARATOR === $tokens[$index][0]) {
+            if (TH::isNamespaceSeparator($tokens[$index])) {
                 $analyzeTokens = [];
                 while (TH::partOfQualifiedName($tokens[$index])) {
                     $analyzeTokens[] = $tokens[$index];

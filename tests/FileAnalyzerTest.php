@@ -189,6 +189,18 @@ class FileAnalyzerTest extends TestCase
         $this->assertTrue($module->hasDependencyOn("Test\\TraitModule\\TraitFile"));
     }
 
+    public function testAnalyzeDoesNotInterpretNamespaceKeywordAsExternalDependency()
+    {
+        $analyzer = $this->makeAnalyzer(__DIR__ . "/files/FileWithNamespaceKeywordReferringToCurrentNamespace.php");
+        $analyzer->analyze();
+
+        $module = $analyzer->getModule();
+
+        $this->assertFalse($module->dependsOnModule("namespace"));
+        $this->assertFalse($module->hasDependencyOn("namespace\\FileWithUseFunctionClause"));
+        $this->assertSame(0, $module->getDependencyCount());
+    }
+
     private function makeAnalyzer(string $path) : FileAnalyzer
     {
         return new FileAnalyzer($path, new ModuleRegistry());
