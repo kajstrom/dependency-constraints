@@ -36,9 +36,9 @@ In a layered architecture you might want to prevent other layers of your softwar
 public function testBusinessLayerDoesNotDependOnPresentationLayer()
 {
     $dc = new DependencyConstraints("path/to/my/src");
-    $domain = $dc->getModule("MyProject\\Business");
+    $business = $dc->getModule("MyProject\\Business");
     
-    $this->assertFalse($domain->dependsOnModule("MyProject\\Presentation"));
+    $this->assertFalse($business->dependsOnModule("MyProject\\Presentation"));
 }
 ```
 
