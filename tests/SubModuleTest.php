@@ -54,6 +54,25 @@ class SubModuleTest extends TestCase
         $this->assertFalse($module->is("Some\\Other\\Module"));
     }
 
+    public function testDescribeDependenciesToReturnsDescriptionOfDependencies()
+    {
+        $module = new SubModule("Test\\Package");
+        $module->addDependency(new Dependency("Some\\Other\\ClassA", "/some/file.php", 5));
+        $module->addDependency(new Dependency("Some\\Other\\ClassB", "/some/file2.php", 10));
+
+        $expected = "Some\\Other\\ClassA in /some/file.php:5" . PHP_EOL
+            . "Some\\Other\\ClassB in /some/file2.php:10" . PHP_EOL;
+
+        $this->assertEquals($expected, $module->describeDependenciesTo("Some\\Other"));
+    }
+
+    public function testDescribeDependenciesToWhenThereAreNoDependenciesReturnsEmptyString()
+    {
+        $module = new SubModule("Test\\Package");
+
+        $this->assertSame("", $module->describeDependenciesTo("Some\\Other"));
+    }
+
     public function testBelongsToModuleWhenModuleBelongsToModule()
     {
         $module = new SubModule("Test\\Package");

@@ -60,4 +60,16 @@ class CompositeModule implements Module
     {
         return $this->name === $module;
     }
+
+    public function describeDependenciesTo(string $module): string
+    {
+        $description = "";
+        foreach ($this->subModules as $sub) {
+            $description .= $sub->describeDependenciesTo($module);
+        }
+
+        return $description;
+    }
+
+
 }

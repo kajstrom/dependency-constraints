@@ -56,10 +56,27 @@ class CompositeModuleTest extends TestCase
         $this->assertTrue($cm->is("Some\\Module\\"));
     }
 
-    public function testIsWhenMOduleIsNotTheModuleBeingTestedReturnsFalse()
+    public function testIsWhenModuleIsNotTheModuleBeingTestedReturnsFalse()
     {
         $cm = new CompositeModule("Some\\Module\\");
 
         $this->assertFalse($cm->is("Totally\\Different\\Module\\"));
+    }
+
+    public function testDescribeDependenciesToReturnsDependencyDescriptionsOfSubModules()
+    {
+        $cm = new CompositeModule("Some");
+        $module = new SubModule("Some\\ModuleA");
+        $module->addDependency(new Dependency("Something\\Else\\ClassA", "/some/file.php", 5));
+        $cm->add($module);
+
+        $another = new SubModule("Some\\ModuleB");
+        $another->addDependency(new Dependency("Something\\Else\\ClassB", "/some/file2.php", 15));
+        $cm->add($another);
+
+        $expected = "Something\\Else\\ClassA in /some/file.php:5" . PHP_EOL
+            . "Something\\Else\\ClassB in /some/file2.php:15" . PHP_EOL;
+
+        $this->assertSame($expected, $cm->describeDependenciesTo("Something\\Else"));
     }
 }

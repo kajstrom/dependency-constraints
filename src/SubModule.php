@@ -53,6 +53,19 @@ class SubModule implements Module
         return $this->name === $module;
     }
 
+    public function describeDependenciesTo(string $module): string
+    {
+        $description = "";
+
+        foreach ($this->dependencies as $dependency) {
+            if ($dependency->belongsToModule($module)) {
+                $description .= (string)$dependency . PHP_EOL;
+            }
+        }
+
+        return $description;
+    }
+
     public function belongsToModule(string $module) : bool
     {
         return strpos($this->name, $module) === 0;

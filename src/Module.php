@@ -12,4 +12,12 @@ interface Module
     public function hasDependencyOn(string $fqn) : bool;
 
     public function is(string $module) : bool;
+
+    /**
+     * Provides a description of dependencies to the specified module.
+     *
+     * @param string $module
+     * @return string
+     */
+    public function describeDependenciesTo(string $module) : string;
 }
