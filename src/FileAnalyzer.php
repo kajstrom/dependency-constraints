@@ -94,7 +94,7 @@ class FileAnalyzer
                     $index++;
                 }
 
-                $useClassAnalyzer = new UseAnalyzer($analyzeTokens, $this->module);
+                $useClassAnalyzer = new UseAnalyzer($analyzeTokens, $this->path, $this->module);
                 $useClassAnalyzer->analyze();
             }
 
@@ -105,7 +105,7 @@ class FileAnalyzer
                     $index++;
                 }
 
-                $fqnAnalyzer = new FQNAnalyzer($analyzeTokens, $this->module);
+                $fqnAnalyzer = new FQNAnalyzer($analyzeTokens, $this->path, $this->module);
                 $fqnAnalyzer->analyze();
             }
         }

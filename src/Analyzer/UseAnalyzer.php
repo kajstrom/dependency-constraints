@@ -15,11 +15,16 @@ class UseAnalyzer implements Analyzer
      * @var SubModule
      */
     private $subModule;
+    /**
+     * @var string
+     */
+    private $file;
 
-    public function __construct(array $tokens, SubModule $subModule)
+    public function __construct(array $tokens, string $file, SubModule $subModule)
     {
         $this->tokens = $tokens;
         $this->subModule = $subModule;
+        $this->file = $file;
     }
 
     public function analyze() : void
@@ -35,12 +40,21 @@ class UseAnalyzer implements Analyzer
         }
 
         $fqn = "";
+        $lineNumber = 0;
         for ($index = 0; $index < count($tokens); $index++) {
+            if (is_array($tokens[$index])) {
+                $lineNumber = $tokens[$index][2];
+            }
+
             if (TH::isOpeningCurlyBrace($tokens[$index])) {
                 while (!TH::isClosingCurlyBrace($tokens[$index])) {
 
                     if (TH::notCommaOrWhitespace($tokens[$index]) && TH::notAs($tokens[$index])) {
-                        $this->subModule->addDependency(new Dependency($fqn . $tokens[$index][1]));
+                        $this->subModule->addDependency(new Dependency(
+                            $fqn . $tokens[$index][1],
+                            $this->file,
+                            $lineNumber
+                        ));
 
                         $index++;
                     } else if (TH::isAs($tokens[$index])) {
@@ -52,7 +66,11 @@ class UseAnalyzer implements Analyzer
 
                 $fqn = "";
             } else if (TH::isComma($tokens[$index])) {
-                $this->subModule->addDependency(new Dependency($fqn));
+                $this->subModule->addDependency(new Dependency(
+                    $fqn,
+                    $this->file,
+                    $lineNumber
+                ));
                 $fqn = "";
             } else if (TH::notWhiteSpace($tokens[$index])) {
                 if (TH::isAs($tokens[$index])) {
@@ -65,7 +83,7 @@ class UseAnalyzer implements Analyzer
         }
 
         if (!empty($fqn)) {
-            $this->subModule->addDependency(new Dependency($fqn));
+            $this->subModule->addDependency(new Dependency($fqn, $this->file, $lineNumber));
         }
     }
 

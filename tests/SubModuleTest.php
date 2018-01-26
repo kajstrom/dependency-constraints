@@ -9,7 +9,7 @@ class SubModuleTest extends TestCase
     public function testAddDependencyAddsDependencyToModule()
     {
         $module = new SubModule("Test\\Package");
-        $module->addDependency(new Dependency("Some\\Dependency\\ClassA"));
+        $module->addDependency(new Dependency("Some\\Dependency\\ClassA", "/some/file.php", 10));
 
         $this->assertTrue($module->dependsOnModule("Some\\Dependency"));
     }
@@ -17,7 +17,7 @@ class SubModuleTest extends TestCase
     public function testAddDependencyWhenDependencyIsForASubModuleDoesNotAddDependency()
     {
         $module = new SubModule("Test\\Package");
-        $module->addDependency(new Dependency("Test\\Package\\SubModule\\ClassA"));
+        $module->addDependency(new Dependency("Test\\Package\\SubModule\\ClassA", "/some/file.php", 10));
 
         $this->assertFalse($module->dependsOnModule("Test\\Package\\SubModule"));
         $this->assertFalse($module->hasDependencyOn("Test\\Package\\SubModule\\ClassA"));
@@ -27,7 +27,7 @@ class SubModuleTest extends TestCase
     public function testHasDependencyOnWhenDependencyExistsReturnsTrue()
     {
         $module = new SubModule("Test\\Package");
-        $module->addDependency(new Dependency("Some\\Dependency\\ClassA"));
+        $module->addDependency(new Dependency("Some\\Dependency\\ClassA", "/some/file.php", 10));
 
         $this->assertTrue($module->hasDependencyOn("Some\\Dependency\\ClassA"));
     }
@@ -35,7 +35,7 @@ class SubModuleTest extends TestCase
     public function testHasDependencyOnWhenNoDependencyExistsReturnsFalse()
     {
         $module = new SubModule("Test\\Package");
-        $module->addDependency(new Dependency("Some\\Dependency\\ClassA"));
+        $module->addDependency(new Dependency("Some\\Dependency\\ClassA", "/some/file.php", 10));
 
         $this->assertFalse($module->hasDependencyOn("Some\\Dependency\\ClassB"));
     }

@@ -1,6 +1,7 @@
 <?php
 
 use KajStrom\DependencyConstraints\CompositeModule;
+use KajStrom\DependencyConstraints\Dependency;
 use KajStrom\DependencyConstraints\SubModule;
 use PHPUnit\Framework\TestCase;
 
@@ -10,7 +11,7 @@ class CompositeModuleTest extends TestCase
     {
         $cm = new CompositeModule("Some\\Module\\");
         $module = new SubModule("Some\\Module\\Mod1");
-        $module->addDependency(new \KajStrom\DependencyConstraints\Dependency("Some\\OtherModule\\ClassA"));
+        $module->addDependency(new Dependency("Some\\OtherModule\\ClassA", "/some/file.php", 10));
 
         $cm->add($module);
         $cm->add(new SubModule("Some\\Module\\Mod2"));
@@ -24,7 +25,7 @@ class CompositeModuleTest extends TestCase
         $cm->add(new SubModule("Some\\Module\\Mod1"));
         $cm->add(new SubModule("Some\\Module\\Mod2"));
 
-        $this->assertFalse($cm->dependsOnModule("Some\\OtherModule"));
+        $this->assertFalse($cm->dependsOnModule("Some\\OtherModule", "/some/file.php", 10));
     }
 
     public function testHasDependencyOnWhenSubModuleHasDependencyOnAClassReturnsTrue()
@@ -32,7 +33,7 @@ class CompositeModuleTest extends TestCase
         $cm = new CompositeModule("Some\\Module\\");
 
         $module = new SubModule("Some\\Module\\Mod1");
-        $module->addDependency(new \KajStrom\DependencyConstraints\Dependency("Some\\OtherModule\\ClassA"));
+        $module->addDependency(new Dependency("Some\\OtherModule\\ClassA", "/some/file.php", 10));
 
         $cm->add($module);
         $cm->add(new SubModule("Some\\Module\\Mod2"));

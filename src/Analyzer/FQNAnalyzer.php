@@ -1,10 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Kaitsu
- * Date: 17.1.2018
- * Time: 19:11
- */
+declare(strict_types=1);
 
 namespace KajStrom\DependencyConstraints\Analyzer;
 
@@ -22,11 +17,16 @@ class FQNAnalyzer implements Analyzer
      * @var SubModule
      */
     private $subModule;
+    /**
+     * @var string
+     */
+    private $file;
 
-    public function __construct(array $tokens, SubModule $subModule)
+    public function __construct(array $tokens, string $file, SubModule $subModule)
     {
         $this->tokens = $tokens;
         $this->subModule = $subModule;
+        $this->file = $file;
     }
 
     public function analyze(): void
@@ -42,7 +42,7 @@ class FQNAnalyzer implements Analyzer
         $fqn = implode("", $fqn);
         $fqn = substr($fqn, 1);
 
-        $this->subModule->addDependency(new Dependency($fqn));
+        $this->subModule->addDependency(new Dependency($fqn, $this->file, $this->tokens[0][2]));
     }
 
     /**
