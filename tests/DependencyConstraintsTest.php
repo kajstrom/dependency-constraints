@@ -44,4 +44,12 @@ class DependencyConstraintsTest extends TestCase
 
         $this->assertNull($module);
     }
+
+    public function testGetModuleOnTestFilesProvidesDescriptionForDependencies()
+    {
+        $dc = new DependencyConstraints(__DIR__ . "/files");
+        $module = $dc->getModule("Test\\Package");
+
+        $this->assertContains("FileWithFQNUsages.php:8", $module->describeDependenciesTo("KajStrom"));
+    }
 }
