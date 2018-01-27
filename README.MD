@@ -38,7 +38,10 @@ public function testBusinessLayerDoesNotDependOnPresentationLayer()
     $dc = new DependencyConstraints("path/to/my/src");
     $business = $dc->getModule("MyProject\\Business");
     
-    $this->assertFalse($business->dependsOnModule("MyProject\\Presentation"));
+    $this->assertFalse(
+        $business->dependsOnModule("MyProject\\Presentation"),
+        $business->describeDependenciesTo("MyProject\\Presentation")
+    );
 }
 ```
 
@@ -50,7 +53,10 @@ public function testModuleADoesNotDependUponModuleB()
     $dc = new DependencyConstraints("path/to/my/src");
     $moduleA = $dc->getModule("MyProject\\ModuleA");
     
-    $this->assertFalse($moduleA->dependsOnModule("MyProject\\ModuleB"));
+    $this->assertFalse(
+        $moduleA->dependsOnModule("MyProject\\ModuleB"),
+        $moduleA->describeDependenciesTo("MyProject\\ModuleB")
+    );
 }
 ```
 
@@ -61,7 +67,10 @@ public function testApplicationLayerDoesNotDependOnSymfonyHttpFoundation()
     $dc = new DependencyConstraints("path/to/my/src");
     $application = $dc->getModule("MyProject\Application");
     
-    $this->assertFalse($application->dependsOnModule("Symfony\\HttpFoundation");
+    $this->assertFalse(
+        $application->dependsOnModule("Symfony\\HttpFoundation"),
+        $application->describeDependenciesTo("Symfony\\HttpFoundation")
+    );
 }
 ```
 
