@@ -12,9 +12,10 @@ class FileAnalyzer
      * @var string
      */
     private $path;
-
     /** @var  SubModule|null */
-    private $module;
+    private $currentModule;
+    /** @var array  */
+    private $allModules = [];
     /**
      * @var ModuleRegistry
      */
@@ -60,12 +61,7 @@ class FileAnalyzer
                     $index++;
                 }
 
-                if ($this->registry->has($moduleName)) {
-                    $this->module = $this->registry->get($moduleName);
-                } else {
-                    $this->module = new SubModule($moduleName);
-                    $this->registry->add($this->module);
-                }
+                $this->addModule($moduleName);
             }
 
             if (T_USE === $tokens[$index][0]) {
@@ -94,7 +90,7 @@ class FileAnalyzer
                     $index++;
                 }
 
-                $useClassAnalyzer = new UseAnalyzer($analyzeTokens, $this->path, $this->module);
+                $useClassAnalyzer = new UseAnalyzer($analyzeTokens, $this->path, $this->currentModule);
                 $useClassAnalyzer->analyze();
             }
 
@@ -105,7 +101,7 @@ class FileAnalyzer
                     $index++;
                 }
 
-                $fqnAnalyzer = new FQNAnalyzer($analyzeTokens, $this->path, $this->module);
+                $fqnAnalyzer = new FQNAnalyzer($analyzeTokens, $this->path, $this->currentModule);
                 $fqnAnalyzer->analyze();
             }
         }
@@ -116,6 +112,18 @@ class FileAnalyzer
      */
     public function getModules() : array
     {
-        return [$this->module];
+        return $this->allModules;
+    }
+
+    private function addModule(string $moduleName) : void
+    {
+        if ($this->registry->has($moduleName)) {
+            $this->currentModule = $this->registry->get($moduleName);
+        } else {
+            $this->currentModule = new SubModule($moduleName);
+            $this->registry->add($this->currentModule);
+        }
+
+        $this->allModules[] = $this->currentModule;
     }
 }
