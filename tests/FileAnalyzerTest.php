@@ -11,7 +11,7 @@ class FileAnalyzerTest extends TestCase
         $analyzer = $this->makeAnalyzer(dirname(__DIR__) . "/src/FileAnalyzer.php");
         $analyzer->analyze();
 
-        $module = $analyzer->getModule();
+        $module = $analyzer->getModules()[0];
 
         $this->assertEquals("KajStrom\\DependencyConstraints", $module->getName());
     }
@@ -21,7 +21,7 @@ class FileAnalyzerTest extends TestCase
         $analyzer = $this->makeAnalyzer(__DIR__ . "/files/FileWithClassUseClause.php");
         $analyzer->analyze();
 
-        $module = $analyzer->getModule();
+        $module = $analyzer->getModules()[0];
 
         $this->assertTrue($module->dependsOnModule("KajStrom\\DependencyConstraints"));
     }
@@ -31,7 +31,7 @@ class FileAnalyzerTest extends TestCase
         $analyzer = $this->makeAnalyzer(__DIR__ . "/files/FileWithClassUseClauseAlias.php");
         $analyzer->analyze();
 
-        $module = $analyzer->getModule();
+        $module = $analyzer->getModules()[0];
 
         $this->assertTrue($module->dependsOnModule("KajStrom\\DependencyConstraints"));
         $this->assertTrue($module->hasDependencyOn("KajStrom\\DependencyConstraints\\DependencyConstraints"));
@@ -42,7 +42,7 @@ class FileAnalyzerTest extends TestCase
         $analyzer = $this->makeAnalyzer(__DIR__ . "/files/FileWithClassGroupedClassUseClause.php");
         $analyzer->analyze();
 
-        $module = $analyzer->getModule();
+        $module = $analyzer->getModules()[0];
 
         $this->assertTrue($module->dependsOnModule("KajStrom\\DependencyConstraints"));
         $this->assertTrue($module->hasDependencyOn("KajStrom\\DependencyConstraints\\DependencyConstraints"));
@@ -56,7 +56,7 @@ class FileAnalyzerTest extends TestCase
         $analyzer = $this->makeAnalyzer(__DIR__ . "/files/FileWithClassUseClauseCommaSeparated.php");
         $analyzer->analyze();
 
-        $module = $analyzer->getModule();
+        $module = $analyzer->getModules()[0];
 
         $this->assertTrue($module->dependsOnModule("KajStrom\\DependencyConstraints"));
         $this->assertTrue($module->hasDependencyOn("KajStrom\\DependencyConstraints\\CompositeModule"));
@@ -68,7 +68,7 @@ class FileAnalyzerTest extends TestCase
         $analyzer = $this->makeAnalyzer(__DIR__ . "/files/FileWithFQNUsages.php");
         $analyzer->analyze();
 
-        $module = $analyzer->getModule();
+        $module = $analyzer->getModules()[0];
 
         $this->assertTrue($module->dependsOnModule("KajStrom\\DependencyConstraints"));
         $this->assertTrue($module->hasDependencyOn("KajStrom\\DependencyConstraints\\Dependency"));
@@ -81,7 +81,7 @@ class FileAnalyzerTest extends TestCase
         $analyzer = $this->makeAnalyzer(__DIR__ . "/files/FileWithClassUseClauseSubModule.php");
         $analyzer->analyze();
 
-        $module = $analyzer->getModule();
+        $module = $analyzer->getModules()[0];
 
         $this->assertFalse($module->dependsOnModule("Test\\Package\\SubModule"));
         $this->assertFalse($module->hasDependencyOn("Test\\Package\\SubModule\\SubModule"));;
@@ -92,7 +92,7 @@ class FileAnalyzerTest extends TestCase
         $analyzer = $this->makeAnalyzer(__DIR__ . "/files/FileWithUseFunctionClause.php");
         $analyzer->analyze();
 
-        $module = $analyzer->getModule();
+        $module = $analyzer->getModules()[0];
 
         $this->assertTrue($module->dependsOnModule("Test\\FunctionModule"));
         $this->assertTrue($module->hasDependencyOn("Test\\FunctionModule\\some_function"));
@@ -103,7 +103,7 @@ class FileAnalyzerTest extends TestCase
         $analyzer = $this->makeAnalyzer(__DIR__ . "/files/FileWithUseFunctionMultipleClause.php");
         $analyzer->analyze();
 
-        $module = $analyzer->getModule();
+        $module = $analyzer->getModules()[0];
 
         $this->assertTrue($module->dependsOnModule("Test\\FunctionModule"));
         $this->assertTrue($module->hasDependencyOn("Test\\FunctionModule\\some_function"));
@@ -115,7 +115,7 @@ class FileAnalyzerTest extends TestCase
         $analyzer = $this->makeAnalyzer(__DIR__ . "/files/FileWithUseFunctionCommaSeparated.php");
         $analyzer->analyze();
 
-        $module = $analyzer->getModule();
+        $module = $analyzer->getModules()[0];
 
         $this->assertTrue($module->dependsOnModule("Test\\FunctionModule"));
         $this->assertTrue($module->hasDependencyOn("Test\\FunctionModule\\some_function"));
@@ -127,7 +127,7 @@ class FileAnalyzerTest extends TestCase
         $analyzer = $this->makeAnalyzer(__DIR__ . "/files/FileWithFunctionVariableUseClause.php");
         $analyzer->analyze();
 
-        $module = $analyzer->getModule();
+        $module = $analyzer->getModules()[0];
 
         $this->assertSame(0, $module->getDependencyCount());
     }
@@ -137,7 +137,7 @@ class FileAnalyzerTest extends TestCase
         $analyzer = $this->makeAnalyzer(__DIR__ . "/files/FileWithUseConstClause.php");
         $analyzer->analyze();
 
-        $module = $analyzer->getModule();
+        $module = $analyzer->getModules()[0];
 
         $this->assertTrue($module->dependsOnModule("Test\\ConstantModule"));
         $this->assertTrue($module->hasDependencyOn("Test\\ConstantModule\\SOME_CONST"));
@@ -148,7 +148,7 @@ class FileAnalyzerTest extends TestCase
         $analyzer = $this->makeAnalyzer(__DIR__ . "/files/FileWithUseConstMultiple.php");
         $analyzer->analyze();
 
-        $module = $analyzer->getModule();
+        $module = $analyzer->getModules()[0];
 
         $this->assertTrue($module->dependsOnModule("Test\\ConstantModule"));
         $this->assertTrue($module->hasDependencyOn("Test\\ConstantModule\\SOME_CONST"));
@@ -160,7 +160,7 @@ class FileAnalyzerTest extends TestCase
         $analyzer = $this->makeAnalyzer(__DIR__ . "/files/FileWithUseConstCommaSeparated.php");
         $analyzer->analyze();
 
-        $module = $analyzer->getModule();
+        $module = $analyzer->getModules()[0];
 
         $this->assertTrue($module->dependsOnModule("Test\\ConstantModule"));
         $this->assertTrue($module->hasDependencyOn("Test\\ConstantModule\\SOME_CONST"));
@@ -172,7 +172,7 @@ class FileAnalyzerTest extends TestCase
         $analyzer = $this->makeAnalyzer(__DIR__ . "/files/FileWithFQNTraitUse.php");
         $analyzer->analyze();
 
-        $module = $analyzer->getModule();
+        $module = $analyzer->getModules()[0];
 
         $this->assertTrue($module->dependsOnModule("Test\\TraitModule"));
         $this->assertTrue($module->hasDependencyOn("Test\\TraitModule\\TraitFile"));
@@ -183,7 +183,7 @@ class FileAnalyzerTest extends TestCase
         $analyzer = $this->makeAnalyzer(__DIR__ . "/files/FileWithImportedTraitUse.php");
         $analyzer->analyze();
 
-        $module = $analyzer->getModule();
+        $module = $analyzer->getModules()[0];
 
         $this->assertTrue($module->dependsOnModule("Test\\TraitModule"));
         $this->assertTrue($module->hasDependencyOn("Test\\TraitModule\\TraitFile"));
@@ -194,7 +194,7 @@ class FileAnalyzerTest extends TestCase
         $analyzer = $this->makeAnalyzer(__DIR__ . "/files/FileWithNamespaceKeywordReferringToCurrentNamespace.php");
         $analyzer->analyze();
 
-        $module = $analyzer->getModule();
+        $module = $analyzer->getModules()[0];
 
         $this->assertFalse($module->dependsOnModule("namespace"));
         $this->assertFalse($module->hasDependencyOn("namespace\\FileWithUseFunctionClause"));

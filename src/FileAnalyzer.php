@@ -111,8 +111,11 @@ class FileAnalyzer
         }
     }
 
-    public function getModule() : ?SubModule
+    /**
+     * @return SubModule[]
+     */
+    public function getModules() : array
     {
-        return $this->module;
+        return [$this->module];
     }
 }
