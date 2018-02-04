@@ -2,7 +2,7 @@
 declare(strict_types=1);
 namespace KajStrom\DependencyConstraints;
 
-class SubModule implements Module
+class SubModule implements Module, Dependent
 {
     /** @var string  */
     private $name = "";
@@ -12,13 +12,6 @@ class SubModule implements Module
     public function __construct(string $name)
     {
         $this->name = $name;
-    }
-
-    public function addDependency(Dependency $dependency) : void
-    {
-        if (!$dependency->belongsToModule($this->name)) {
-            $this->dependencies[] = $dependency;
-        }
     }
 
     public function getName() : string
@@ -64,6 +57,13 @@ class SubModule implements Module
         }
 
         return $description;
+    }
+
+    public function addDependency(Dependency $dependency) : void
+    {
+        if (!$dependency->belongsToModule($this->name)) {
+            $this->dependencies[] = $dependency;
+        }
     }
 
     public function belongsToModule(string $module) : bool

@@ -12,7 +12,7 @@ class FileAnalyzer
      * @var string
      */
     private $path;
-    /** @var  SubModule|null */
+    /** @var  Dependent|null */
     private $currentModule;
     /** @var array  */
     private $allModules = [];
@@ -55,7 +55,7 @@ class FileAnalyzer
                 $index += 2;
 
                 $moduleName = "";
-                while (TH::notSemicolon($tokens[$index])) {
+                while (TH::partOfQualifiedName($tokens[$index])) {
                     $moduleName .= $tokens[$index][1];
 
                     $index++;
@@ -117,6 +117,11 @@ class FileAnalyzer
 
     private function addModule(string $moduleName) : void
     {
+        if (empty($moduleName)) {
+            $this->currentModule = new GlobalModule();
+            return;
+        }
+
         if ($this->registry->has($moduleName)) {
             $this->currentModule = $this->registry->get($moduleName);
         } else {

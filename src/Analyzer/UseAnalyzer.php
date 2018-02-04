@@ -2,7 +2,7 @@
 namespace KajStrom\DependencyConstraints\Analyzer;
 
 use KajStrom\DependencyConstraints\Dependency;
-use KajStrom\DependencyConstraints\SubModule;
+use KajStrom\DependencyConstraints\Dependent;
 use KajStrom\DependencyConstraints\Token\Helpers as TH;
 
 class UseAnalyzer implements Analyzer
@@ -12,18 +12,18 @@ class UseAnalyzer implements Analyzer
      */
     private $tokens;
     /**
-     * @var SubModule
+     * @var Dependent
      */
-    private $subModule;
+    private $module;
     /**
      * @var string
      */
     private $file;
 
-    public function __construct(array $tokens, string $file, SubModule $subModule)
+    public function __construct(array $tokens, string $file, Dependent $module)
     {
         $this->tokens = $tokens;
-        $this->subModule = $subModule;
+        $this->module = $module;
         $this->file = $file;
     }
 
@@ -50,7 +50,7 @@ class UseAnalyzer implements Analyzer
                 while (!TH::isClosingCurlyBrace($tokens[$index])) {
 
                     if (TH::notCommaOrWhitespace($tokens[$index]) && TH::notAs($tokens[$index])) {
-                        $this->subModule->addDependency(new Dependency(
+                        $this->module->addDependency(new Dependency(
                             $fqn . $tokens[$index][1],
                             $this->file,
                             $lineNumber
@@ -66,7 +66,7 @@ class UseAnalyzer implements Analyzer
 
                 $fqn = "";
             } else if (TH::isComma($tokens[$index])) {
-                $this->subModule->addDependency(new Dependency(
+                $this->module->addDependency(new Dependency(
                     $fqn,
                     $this->file,
                     $lineNumber
@@ -83,7 +83,7 @@ class UseAnalyzer implements Analyzer
         }
 
         if (!empty($fqn)) {
-            $this->subModule->addDependency(new Dependency($fqn, $this->file, $lineNumber));
+            $this->module->addDependency(new Dependency($fqn, $this->file, $lineNumber));
         }
     }
 

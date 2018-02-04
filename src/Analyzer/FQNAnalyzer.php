@@ -5,7 +5,7 @@ namespace KajStrom\DependencyConstraints\Analyzer;
 
 
 use KajStrom\DependencyConstraints\Dependency;
-use KajStrom\DependencyConstraints\SubModule;
+use KajStrom\DependencyConstraints\Dependent;
 
 class FQNAnalyzer implements Analyzer
 {
@@ -14,18 +14,18 @@ class FQNAnalyzer implements Analyzer
      */
     private $tokens;
     /**
-     * @var SubModule
+     * @var Dependent
      */
-    private $subModule;
+    private $module;
     /**
      * @var string
      */
     private $file;
 
-    public function __construct(array $tokens, string $file, SubModule $subModule)
+    public function __construct(array $tokens, string $file, Dependent $module)
     {
         $this->tokens = $tokens;
-        $this->subModule = $subModule;
+        $this->module = $module;
         $this->file = $file;
     }
 
@@ -42,7 +42,7 @@ class FQNAnalyzer implements Analyzer
         $fqn = implode("", $fqn);
         $fqn = substr($fqn, 1);
 
-        $this->subModule->addDependency(new Dependency($fqn, $this->file, $this->tokens[0][2]));
+        $this->module->addDependency(new Dependency($fqn, $this->file, $this->tokens[0][2]));
     }
 
     /**

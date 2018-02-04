@@ -201,7 +201,7 @@ class FileAnalyzerTest extends TestCase
         $this->assertSame(0, $module->getDependencyCount());
     }
 
-    public function testAnalyzeFindsTwoModulesFromFileWithTwoNameSpaces()
+    public function testAnalyzeFindsTwoModulesFromFileWithTwoNameSpacesInSimpleCombinationSyntax()
     {
         $analyzer = $this->makeAnalyzer(__DIR__ . "/files/FileWithMultipleNameSpacesSimpleCombinationSyntax.php");
         $analyzer->analyze();
@@ -215,6 +215,16 @@ class FileAnalyzerTest extends TestCase
 
         $this->assertTrue($firstModule->dependsOnModule("Test\\OtherPackage"));
         $this->assertTrue($secondModule->dependsOnModule("Test\\Package"));
+    }
+
+    public function testAnalyzeFindsTwoModulesFromFileWithTwoNameSpacesInBracketedSyntax()
+    {
+        $analyzer = $this->makeAnalyzer(__DIR__ . "/files/FileWithMultipleNameSpacesBracketedSyntax.php");
+        $analyzer->analyze();
+
+        $modules = $analyzer->getModules();
+
+        $this->assertCount(2, $modules);
     }
 
     private function makeAnalyzer(string $path) : FileAnalyzer
