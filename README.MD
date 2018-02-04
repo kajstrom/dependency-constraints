@@ -14,9 +14,9 @@ DependencyConstraints is inspired by JDepend and Fitness Functions introduced in
 ## What is considered to be a dependency
 
 DependencyConstraints assumes the following to be dependencies:
-- Using a class, interface, trait or instances of a class from another module (namespace). (In testing currently)
-- Using a function from another module. (In testing currently)
-- Using a constant from another module. (In testing currently)
+- Using a class, interface, trait or instances of a class from another module (namespace).
+- Using a function from another module.
+- Using a constant from another module.
 
 Currently globally scoped classes, functions and constants are not considered to be dependencies.
 
@@ -96,8 +96,6 @@ $instance = new $className;
 ```
 
 This would not be found as a dependency when analyzing the source.
-
-At this time I do not intend to support having multiple namespaces in a single file.
 
 ## Current status
 
