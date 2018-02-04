@@ -99,7 +99,11 @@ This would not be found as a dependency when analyzing the source.
 
 ## Current status
 
-DependencyConstraints is currently in alpha. Expect bugs, interface changes and all sorts of randomness. Feedback is appreciated.
+DependencyConstraints is currently in beta. All intended functionality is implemented
+and the interface should remain pretty stable from now on. More testing is necessary, the tool has been tested with
+one larger project so far. More testing will be carried out with and bugs fixed when encountered.
+
+Feedback is appreciated.
 
 ## Why not use Pdepend?
 
