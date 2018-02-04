@@ -227,6 +227,14 @@ class FileAnalyzerTest extends TestCase
         $this->assertCount(2, $modules);
     }
 
+    public function testAnalyzeFileInGlobalNameSpaceHasNoModules()
+    {
+        $analyzer = $this->makeAnalyzer(__DIR__ . "/files/FileWithClassUseInGlobalNameSpace.php");
+        $analyzer->analyze();
+
+        $this->assertEmpty($analyzer->getModules());
+    }
+
     private function makeAnalyzer(string $path) : FileAnalyzer
     {
         return new FileAnalyzer($path, new ModuleRegistry());

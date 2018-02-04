@@ -29,6 +29,7 @@ class FileAnalyzer
 
         $this->path = $path;
         $this->registry = $registry;
+        $this->currentModule = new GlobalModule();
     }
 
     public function analyze()
