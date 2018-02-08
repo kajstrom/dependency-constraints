@@ -18,6 +18,11 @@ class Helpers
         return false;
     }
 
+    public static function isSemicolon($token) : bool
+    {
+        return $token === ";";
+    }
+
     public static function notSemicolon($token) : bool
     {
         return $token !== ";";

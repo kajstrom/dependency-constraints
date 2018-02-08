@@ -33,6 +33,10 @@ class UseAnalyzer implements Analyzer
             return;
         }
 
+        if ($this->isTraitVisibilityOverride()) {
+            return;
+        }
+
         $tokens = $this->tokens;
 
         if (TH::isNamespaceSeparator($tokens[0])) {
@@ -85,6 +89,16 @@ class UseAnalyzer implements Analyzer
         if (!empty($fqn)) {
             $this->module->addDependency(new Dependency($fqn, $this->file, $lineNumber));
         }
+    }
+
+    private function isTraitVisibilityOverride() {
+        foreach ($this->tokens as $token) {
+            if (TH::isSemicolon($token)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     private function isGlobalClass() : bool

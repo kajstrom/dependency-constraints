@@ -89,6 +89,17 @@ class FileAnalyzer
                 while (TH::notSemicolon($tokens[$index])) {
                     $analyzeTokens[] = $tokens[$index];
                     $index++;
+
+
+                    if (TH::isOpeningCurlyBrace($tokens[$index])) {
+                        while (!TH::isClosingCurlyBrace($tokens[$index])) {
+                            $analyzeTokens[] = $tokens[$index];
+                            $index++;
+                        }
+
+                        $analyzeTokens[] = $tokens[$index];
+                        break;
+                    }
                 }
 
                 $useClassAnalyzer = new UseAnalyzer($analyzeTokens, $this->path, $this->currentModule);
