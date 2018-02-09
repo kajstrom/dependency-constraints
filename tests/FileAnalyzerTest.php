@@ -189,6 +189,17 @@ class FileAnalyzerTest extends TestCase
         $this->assertTrue($module->hasDependencyOn("Test\\TraitModule\\TraitFile"));
     }
 
+    public function testAnalyzeFindsDependencyFromImportedTraitUseWithVisibilityOverrides()
+    {
+        $analyzer = $this->makeAnalyzer(__DIR__ . "/files/FileWithTraitUseWithVisibilityOverrides.php");
+        $analyzer->analyze();
+
+        $module = $analyzer->getModules()[0];
+
+        $this->assertTrue($module->dependsOnModule("Test\\TraitModule"));
+        $this->assertTrue($module->hasDependencyOn("Test\\TraitModule\\TraitFile"));
+    }
+
     public function testAnalyzeDoesNotInterpretNamespaceKeywordAsExternalDependency()
     {
         $analyzer = $this->makeAnalyzer(__DIR__ . "/files/FileWithNamespaceKeywordReferringToCurrentNamespace.php");
