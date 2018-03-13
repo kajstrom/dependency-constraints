@@ -15,7 +15,7 @@ DependencyConstraints is inspired by JDepend and Fitness Functions introduced in
 
 ## Getting started
 
-To get started require DependencyConstraints from Packagist.
+To get started require DependencyConstraints with Composer.
 
 ```
 composer require kajstrom/dependency-constraits --dev
@@ -25,23 +25,30 @@ After DependencyConstraints has been installed you can start creating tests with
 It is recommended to create only a single instance of DependencyConstraints as it will
 go through all PHP files in your in the target directory.
 
+In addition, you should use DependencyConstraints on your own src/classes directory. It is not necessary for
+DependencyConstraints to parse vendor directory etc. to be able to look for
+usages of external classes.
+
 Using PHPUnit the test would look like this.
 ```php
-    class DependencyConstraintsOwnSourceTest extends TestCase
+    class MyDependencyTest extends TestCase
     {
         /** @var  DependencyConstraints */
         private static $dc;
     
         public static function setUpBeforeClass()
         {
-            self::$dc = new DependencyConstraints(dirname(__DIR__) . "/src");
+            self::$dc = new DependencyConstraints("/path/to/myproject/src");
         }
     
-        public function testGetModuleReturnsModuleThatIsNotCoupledToNonExistentModule()
+        public function testModuleAIsNotDependentOnModuleX()
         {
-            $module = self::$dc->getModule("KajStrom\\DependencyConstraints");
+            $moduleA = self::$dc->getModule("MyProject\\ModuleA");
     
-            $this->assertFalse($module->dependsOnModule("No\\Such\\Module"));
+            $this->assertFalse(
+                $moduleA->dependsOnModule("MyProject\\ModuleX"),
+                $moduleA->describeDependenciesTo("MyProject\\ModuleX"),
+            );
         }
     }
 ```
