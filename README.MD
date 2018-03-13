@@ -1,4 +1,6 @@
 [![Tracis CI](https://travis-ci.org/kajstrom/dependency-constraints.svg?branch=master)](https://travis-ci.org/kajstrom/dependency-constraints)
+[![Version](https://img.shields.io/packagist/v/kajstrom/dependency-constraints.svg)](https://packagist.org/packages/kajstrom/dependency-constraints)
+[![PHP version](https://img.shields.io/packagist/php-v/kajstrom/dependency-constraints.svg)](https://packagist.org/packages/kajstrom/dependency-constraints)
 
 # DependencyConstraints
 
@@ -96,14 +98,6 @@ $instance = new $className;
 ```
 
 This would not be found as a dependency when analyzing the source.
-
-## Current status
-
-DependencyConstraints is currently in beta. All intended functionality is implemented
-and the interface should remain pretty stable from now on. More testing is necessary, the tool has been tested with
-one larger project so far. More testing will be carried out with and bugs fixed when encountered.
-
-Feedback is appreciated.
 
 ## Why not use Pdepend?
 
