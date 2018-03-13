@@ -18,7 +18,7 @@ DependencyConstraints is inspired by JDepend and Fitness Functions introduced in
 To get started require DependencyConstraints with Composer.
 
 ```
-composer require kajstrom/dependency-constraits --dev
+composer require kajstrom/dependency-constraints --dev
 ```
 
 After DependencyConstraints has been installed you can start creating tests with it.
