@@ -13,6 +13,39 @@ you can create tests that act as a safeguard against such changes.
 
 DependencyConstraints is inspired by JDepend and Fitness Functions introduced in the book [Building Evolutionary Architectures](https://www.thoughtworks.com/books/building-evolutionary-architectures).
 
+## Getting started
+
+To get started require DependencyConstraints from Packagist.
+
+```
+composer require kajstrom/dependency-constraits --dev
+```
+
+After DependencyConstraints has been installed you can start creating tests with it.
+It is recommended to create only a single instance of DependencyConstraints as it will
+go through all PHP files in your in the target directory.
+
+Using PHPUnit the test would look like this.
+```php
+    class DependencyConstraintsOwnSourceTest extends TestCase
+    {
+        /** @var  DependencyConstraints */
+        private static $dc;
+    
+        public static function setUpBeforeClass()
+        {
+            self::$dc = new DependencyConstraints(dirname(__DIR__) . "/src");
+        }
+    
+        public function testGetModuleReturnsModuleThatIsNotCoupledToNonExistentModule()
+        {
+            $module = self::$dc->getModule("KajStrom\\DependencyConstraints");
+    
+            $this->assertFalse($module->dependsOnModule("No\\Such\\Module"));
+        }
+    }
+```
+
 ## What is considered to be a dependency
 
 DependencyConstraints assumes the following to be dependencies:
