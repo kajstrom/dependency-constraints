@@ -1,6 +1,6 @@
 {
     "name": "kajstrom/dependency-constraints",
-    "description": "Library for creating constraints for dependencies between modules.",
+    "description": "Create constraints in your test suite to prevent unwanted dependencies.",
     "type": "library",
     "require": {
         "php": "^7.1.0",
